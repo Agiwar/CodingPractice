@@ -29,4 +29,6 @@ if __name__ == "__main__":
     args = argparse_list()
     sorted_array = args.sorted_array
     num_nonduplicated_ellement = remove_duplicates(sorted_array)
+
+    # given 0 0 1 1 1 2 2 3 3 4, you may get 5
     print(num_nonduplicated_ellement)
