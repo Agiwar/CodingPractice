@@ -12,6 +12,7 @@ def argparse_list() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def remove_duplicates(arr: List[int]) -> int:
     # the first element must be unique
     # so the pointer we use to indicate duplicated or not can be started from second position

@@ -7,6 +7,7 @@ def argparse_list() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def is_valid_parentheses(s: str) -> bool:
     pairs = {
         "(": ")",

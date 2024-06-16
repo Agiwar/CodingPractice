@@ -8,6 +8,7 @@ def argparse_list() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def concatenate_array(arr: List[int]) -> List[int]:
     # python has built-in concatenation of arrays and strings
     # return arr + arr

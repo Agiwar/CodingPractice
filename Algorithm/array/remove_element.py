@@ -9,6 +9,7 @@ def argparse_list() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def remvoe_element(arr: List[int], val=int) -> int:
     # since the all elements in array may be equal to val
     # so the pointer L is started from zero (remove all occurrences)

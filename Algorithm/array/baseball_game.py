@@ -8,6 +8,7 @@ def argparse_list() -> argparse.Namespace:
     args = parser.parse_args()
     return args
 
+
 def cal_points(operations: List[str]) -> int:
     record = []
 
