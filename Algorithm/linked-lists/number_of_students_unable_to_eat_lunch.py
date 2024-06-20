@@ -55,4 +55,7 @@ if __name__ == "__main__":
     students = args.students
     sandwiches = args.sandwiches
     num_students_no_lunch = count_students(students=students, sandwiches=sandwiches)
+
+    # given students = [1, 1, 1, 0, 0, 1], sandwiches = [1, 0, 0, 0, 1, 1]
+    # you may get 3
     print(num_students_no_lunch)
