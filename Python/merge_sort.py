@@ -24,4 +24,6 @@ def merge_sort(arr: List[int]) -> List[int]:
 if __name__ == "__main__":
     args = argparse_list()
     arr = args.given_arr
-    print(merge_sort(arr))
+
+    arr_sort = merge_sort(arr)
+    print(arr_sort)
