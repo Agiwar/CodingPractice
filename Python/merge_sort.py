@@ -10,14 +10,17 @@ def argparse_list() -> argparse.Namespace:
 
 
 def merge_sort(arr: List[int]) -> List[int]:
+    # check whether sub-array is individual or not
     if len(arr) <= 1:
         return arr
     
+    # find out the middle point of array to copy left & right sub-array
     m = len(arr) // 2
 
     left_half = arr[:m]
     right_half = arr[m:]
 
+    # recursion for left & right half sub-array until getting individual
     return merge_sort(left_half), merge_sort(right_half)
 
 
