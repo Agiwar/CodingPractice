@@ -21,7 +21,39 @@ def merge_sort(arr: List[int]) -> List[int]:
     right_half = arr[m:]
 
     # recursion for left & right half sub-array until getting individual
-    return merge_sort(left_half), merge_sort(right_half)
+    merge_sort(left_half)
+    merge_sort(right_half)
+
+    # three pointers:
+    # i: left half
+    # j: right half
+    # k: the entire array
+    i = j = k = 0
+
+    # put the smaler value from either left_half or right_halt into arr
+    while i < len(left_half) and j < len(right_half):
+        if left_half[i] <= right_half[j]:
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+        else:
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+    # check whether there's left_half left
+    while i < len(left_half):
+        arr[k] = left_half[i]
+        i += 1
+        k += 1
+    
+    # check whether there's right_half left
+    while j < len(right_half):
+        arr[k] = right_half[j]
+        j += 1
+        k += 1
+    
+    return arr
 
 
 if __name__ == "__main__":
