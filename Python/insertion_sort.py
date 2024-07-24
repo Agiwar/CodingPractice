@@ -17,9 +17,10 @@ def insertion_sort(arr: List[int]) -> List[int]:
         # check whether two individual values in sub-array is ascending or not
         # if not, then do swap
         while j >= 0 and arr[j + 1] < arr[j]:
-            tmp = arr[j + 1]
-            arr[j + 1] = arr[j]
-            arr[j] = tmp
+            arr[j + 1], arr[j] = arr[j], arr[j + 1]
+            # tmp = arr[j + 1]
+            # arr[j + 1] = arr[j]
+            # arr[j] = tmp
 
             j -= 1
         
