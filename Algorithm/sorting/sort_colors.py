@@ -10,13 +10,17 @@ def argparse_list() -> argparse.Namespace:
 
 
 def sort_colors(nums: List[int]) -> None:
-    counts = [0] * 3
+    """
+    use bucket sort, 
+    the time and space complexity are O(N) and O(1) respectively
+    """
+    counts = [0] * 3  # three colors
 
     for n in nums:
         counts[n] += 1
     
     i = 0
-    for n in range(len(counts)):
+    for n in range(3):  # three colors
         for _ in range(counts[n]):
             nums[i] = n
             i += 1
