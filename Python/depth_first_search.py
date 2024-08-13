@@ -11,7 +11,7 @@ class TreeNode:
 
 def inorder(root: Optional[TreeNode]) -> None:
     """
-    Visit left sub-tree fist, then visit root, and finally visit right sub-tree.
+    Visit left sub-tree first, then visit root, and finally visit right sub-tree.
     """
     if not root:
         return None
