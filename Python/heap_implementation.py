@@ -32,8 +32,8 @@ class Heap:
         if len(self.heap) == 2:
             return self.heap.pop()
         
-        result = self.heap[1]
-        self.heap[1] = self.heap.pop()
+        result = self.heap[1]          # the first value is what we want
+        self.heap[1] = self.heap.pop() # to keep heap structure order, the popped value is replaced with last value
         
         i = 1  # pointer of root node
         while (2 * i) < len(self.heap):  # this loop condition is check whether there's a left child
