@@ -36,7 +36,7 @@ class QueueArray:
 
 
 
-# denifition for singly-linked list
+# definition for singly-linked list
 class ListNode:
 
     def __init__(self, val=None, next=None):
@@ -86,7 +86,7 @@ class QueueNode:
         dequeue:
         Remove the item from the first position in queue,
         and the current self.front needs to be updated.
-        If there's nothing in queue after renoving the item, self.rear needs to set be None.
+        If there's nothing in queue after removing the item, self.rear needs to set be None.
         """
         if self.is_empty():
             raise IndexError("Dequeue from an empty queue.")
