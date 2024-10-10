@@ -72,7 +72,7 @@ class QueueNode:
         """
         new_node = ListNode(val= data)
 
-        if not self.back:
+        if not self.rear:
             self.rear = new_node
             self.front = self.rear
             return None
