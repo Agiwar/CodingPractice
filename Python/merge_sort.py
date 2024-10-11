@@ -30,7 +30,7 @@ def merge_sort(arr: List[int]) -> List[int]:
     # k: the entire array
     i = j = k = 0
 
-    # put the smaler value from either left_half or right_halt into arr
+    # put the smaller value from either left_half or right_halt into arr
     while i < len(left_half) and j < len(right_half):
         if left_half[i] <= right_half[j]:
             arr[k] = left_half[i]
