@@ -54,7 +54,7 @@ def find_min_node(root: Optional[TreeNode]) -> Optional[TreeNode]:
 
 def remove(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
     """
-    Remvoe a specific node from a existing BST
+    Remove a specific node from a existing BST
     """
     if not root:
         return None
