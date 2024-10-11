@@ -40,7 +40,7 @@ def binary_search_tree_iteration(root: Optional[TreeNode], target: int) -> bool:
     return False
 
 
-def insert(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+def insert_recursion(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
     """
     Insert a new node into the BST.
     """
@@ -48,12 +48,31 @@ def insert(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         return TreeNode(val=val)
     
     if val > root.val:
-        root.right = insert(root.right, val)
+        root.right = insert_recursion(root.right, val)
     elif val < root.val:
-        root.left = insert(root.left, val)
+        root.left = insert_recursion(root.left, val)
 
     return root
 
+
+def insert_iteration(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    if not root:
+        return TreeNode(val)
+    
+    curr = root
+    while curr:
+        if val < curr.val:
+            if not curr.left:
+                curr.left = TreeNode(val)
+                break
+            curr = curr.left
+        elif val > curr.val:
+            if not curr.right:
+                curr.right = TreeNode(val)
+                break
+            curr = curr.right
+    
+    return root
 
 def find_min_node(root: Optional[TreeNode]) -> Optional[TreeNode]:
     """
