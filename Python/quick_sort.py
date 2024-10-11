@@ -15,7 +15,7 @@ def quick_sort(arr: List[int], s: int, e: int) -> List[int]:
     if e - s + 1 <= 1:
         return arr
     
-    pivot = arr[e]  # set pivot value is the mostright value of array
+    pivot = arr[e]  # set pivot value is the right most value of array
     left = s        # pointer for left side
 
     # go through the entire array to check each value is less than pivot value or not

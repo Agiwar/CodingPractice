@@ -20,7 +20,7 @@ def bucket_sort(arr: List[int]) -> List[int]:
     max_val = max(arr)
 
     # while dataset range is determined, we can create the number of buckets
-    num_of_buckets = (max_val - min_val) + 1  # +1 means both ended value of array need to be included
+    num_of_buckets = (max_val - min_val) + 1  # +1 means both ended value of array needed to be included
 
     # initialize frequency of each value in array, [0, 0, 0, 0, 0, 0, 0, 0]
     counts_each_value_in_array = [0] * num_of_buckets
