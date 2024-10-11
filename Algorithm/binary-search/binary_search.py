@@ -16,6 +16,8 @@ def binary_search(arr: List[int], target: int) -> int:
     R = len(arr) - 1
 
     # execute binary search to find out the index of target value
+    # condition L == R means this value is the last value we need to check
+    # also, consider the edge case: nums = [5], target = 5, output should be 0
     while L <= R:
         # find out the middle pointer
         # m = (L + R) // 2
