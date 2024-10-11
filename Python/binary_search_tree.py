@@ -10,7 +10,7 @@ class TreeNode:
         self.right = right
 
 
-def binary_search_tree(root: Optional[TreeNode], target: int) -> bool:
+def binary_search_tree_recursion(root: Optional[TreeNode], target: int) -> bool:
     """
     Check whether target value exists in the BST or not.
     """
@@ -18,11 +18,26 @@ def binary_search_tree(root: Optional[TreeNode], target: int) -> bool:
         return False
     
     if target > root.val:
-        return binary_search_tree(root.right, target)
+        return binary_search_tree_recursion(root.right, target)
     elif target < root.val:
-        return binary_search_tree(root.left, target)
+        return binary_search_tree_recursion(root.left, target)
     else:
         return True
+
+
+def binary_search_tree_iteration(root: Optional[TreeNode], target: int) -> bool:
+    if not root:
+        return False
+    
+    while root:
+        if target < root.val:
+            root = root.left
+        elif target > root.val:
+            root = root.right
+        else:
+            return True
+    
+    return False
 
 
 def insert(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
