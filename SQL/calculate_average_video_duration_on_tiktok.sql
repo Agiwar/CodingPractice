@@ -32,7 +32,7 @@
 -- >> use LEFT JOIN (cuz there may be users who don't have any videos uploaded)
 SELECT
     u.username AS username,
-    AVG(CASE WHEN v.video_length_seconds::DECIMAL IS NULL THEN 0 ELSE v.video_length_seconds) AS avg_video_length_seconds
+    AVG(CASE WHEN v.video_length_seconds::DECIMAL IS NULL THEN 0 ELSE v.video_length_seconds END) AS avg_video_length_seconds
 FROM
     users AS u
 LEFT JOIN
