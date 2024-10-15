@@ -92,20 +92,20 @@ def remove(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
     """
     if not root:
         return None
-    
+
     if val > root.val:
         root.right = remove(root.right, val)
     elif val < root.val:
         root.left = remove(root.left, val)
+        
+    # target found, and check the current node is leaf or not
+    elif not root.left:
+        return root.right
+    elif not root.right:
+        return root.left
     else:
-        # target found, and check the current node is leaf or not
-        if not root.left:
-            return root.right
-        elif not root.right:
-            return root.left
-        else:
-            min_value_node = find_min_node(root.right)
-            root.val = min_value_node.val
-            root.right = remove(root.right, min_value_node.val)
-    
+        min_value_node = find_min_node(root.right)
+        root.val = min_value_node.val
+        root.right = remove(root.right, min_value_node.val)
+
     return root

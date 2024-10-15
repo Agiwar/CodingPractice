@@ -29,7 +29,7 @@ class Solution:
 
         for num, occur in num_occur.items():
             occur_hash[occur].append(num)
-        
+
         # occur_hash = {
         #     6: [],
         #     5: [],
@@ -38,9 +38,9 @@ class Solution:
         #     2: [2],
         #     1: [1],
         # }
-        
+
         res = []
-        for occur, num_arr in occur_hash.items():
+        for num_arr in occur_hash.values():
             if num_arr and k > 0:
 
                 # if k > len(num_arr), the whole num in num_arr needed to be appended

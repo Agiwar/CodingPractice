@@ -45,11 +45,11 @@ class Solution2:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         diff_hash = {}
         for idx, num in enumerate(numbers):
-            if num not in diff_hash:
-                diff = target - num
-                diff_hash[diff] = idx + 1
-            else:
+            if num in diff_hash:
                 return [diff_hash[num], idx + 1]
+            
+            diff = target - num
+            diff_hash[diff] = idx + 1
 
 
 class Solution3:

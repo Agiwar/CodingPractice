@@ -8,9 +8,7 @@ class QueueArray:
         self.array: List[Any] = []
     
     def is_empty(self) -> bool:
-        if self.array:
-            return False
-        return True
+        return not self.array
     
     def enqueue(self, data: Any) -> None:
         """
@@ -57,9 +55,7 @@ class QueueNode:
         if queue.front is None, then queue.rear is obviously None as well,
         so the entire queue is empty.
         """
-        if self.front:
-            return False
-        return True
+        return not self.front
     
     def enqueue(self, data: Any) -> None:
         """

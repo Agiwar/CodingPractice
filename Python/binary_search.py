@@ -6,8 +6,7 @@ def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-arr", "--sorted_arr", type=int, nargs="+")
     parser.add_argument("-t", "--target", type=int)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def binary_search(arr: List[int], target: int) -> int:

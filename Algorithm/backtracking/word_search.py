@@ -15,8 +15,8 @@ class Solution:
                 return True
             
             if (
-                r not in range(0, rows) or
-                c not in range(0, cols) or
+                r not in range(rows) or  # make sure r is inbound
+                c not in range(cols) or  # make sure c is inbound
                 word[idx] != board[r][c] or
                 (r, c) in word_seen
             ):

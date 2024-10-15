@@ -5,16 +5,25 @@ from typing import List
 def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("given_array", type=int, nargs="+")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def concatenate_array(arr: List[int]) -> List[int]:
-    # python has built-in concatenation of arrays and strings
+    # 1. python has built-in concatenation of arrays and strings
     # return arr + arr
+    
+    # 2. intuitively for loop
+    # res = []
+    # for _ in range(2):
+    #     for num in arr:
+    #         res.append(num)
+    # return res
+    
+    # 3.
     arr_copy = arr.copy()
-    for item in arr:
-        arr_copy.append(item)
+    arr_copy.extend(iter)
+    # for item in arr:
+    #     arr_copy.append(item)
     return arr_copy
 
 

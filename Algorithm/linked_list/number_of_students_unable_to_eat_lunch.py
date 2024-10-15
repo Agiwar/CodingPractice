@@ -6,8 +6,7 @@ def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-stu", "--students", type=int, nargs="+")
     parser.add_argument("-sand", "--sandwiches", type=int, nargs="+")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 # first submission

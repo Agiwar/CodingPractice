@@ -4,8 +4,7 @@ import argparse
 def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("given_string", type=str, nargs="?")  # nargs='?': This will make argparse treat the entire input as a single string, allowing you to pass the input in quotes.
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def is_valid_parentheses(s: str) -> bool:
@@ -17,17 +16,17 @@ def is_valid_parentheses(s: str) -> bool:
 
     if s[0] not in pairs.keys() or len(s) == 1:
         return False
-    
+
     stack = []
     for char in s:
-        if char in pairs.keys():
+        if char in pairs:
             stack.append(char)
+        elif stack and pairs[stack[-1]] == char:
+            stack.pop()
         else:
-            if stack and pairs[stack[-1]] == char:
-                stack.pop()
-            else:
-                return False
-    return False if stack else True
+            return False
+        
+    return not stack
 
 
 if __name__ == "__main__":

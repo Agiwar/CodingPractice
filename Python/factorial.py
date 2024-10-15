@@ -12,16 +12,12 @@ import argparse
 def argparse_integer() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--int", type=int)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def factorial(n: int) -> int:
     # base case: n = 1 or 0
-    if n <= 1:
-        return 1
-    
-    return n * factorial(n - 1)
+    return 1 if n <= 1 else n * factorial(n - 1)
 
 
 if __name__ == "__main__":

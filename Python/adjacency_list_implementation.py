@@ -43,10 +43,16 @@ def dfs(
     if node == target:
         return 1
 
-    count = 0
+    # count = 0
+    # visit.add(node)
+    # for neighbor in adj_list[node]:
+    #     count += dfs(neighbor, target, adj_list, visit)
+    
+    # clean code
     visit.add(node)
-    for neighbor in adj_list[node]:
-        count += dfs(neighbor, target, adj_list, visit)
+    count = sum(
+        dfs(neighbor, target, adj_list, visit) for neighbor in adj_list[node]
+    )
     
     visit.remove(node)
     

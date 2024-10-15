@@ -13,16 +13,11 @@ def can_reach_leaf(root: Optional[TreeNode]) -> bool:
     if not root or root.val == 0:
         return False
     
-    if not root.left and not root.right:
+    if root.left or root.right:
+        return can_reach_leaf(root.left) or can_reach_leaf(root.right)
+    else:
         return True
-    
-    if can_reach_leaf(root.left):
-        return True
-    
-    if can_reach_leaf(root.right):
-        return True
-    
-    return False
+
 
 
 def leaf_path(root: Optional[TreeNode], path: List) -> bool:

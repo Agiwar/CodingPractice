@@ -5,8 +5,7 @@ from typing import List
 def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("given_operations", type=str, nargs="+")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def cal_points(operations: List[str]) -> int:
@@ -20,8 +19,7 @@ def cal_points(operations: List[str]) -> int:
         elif operation == "+":
             record.append(record[-1] + record[-2])
         else:
-            record_num = int(operation)
-            record.append(record_num)
+            record.append(int(operation))
     
     return sum(record)
 

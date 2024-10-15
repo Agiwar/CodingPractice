@@ -21,10 +21,7 @@ class MyLinkedList:
             curr = curr.next
             index -= 1
         
-        if curr and curr != self.R and index == 0:
-            return curr.val
-        
-        return -1
+        return curr.val if curr and curr != self.R and index == 0 else - 1
 
     def addAtHead(self, val: int) -> None:
         node, prev, next  = ListNode(val), self.L, self.L.next

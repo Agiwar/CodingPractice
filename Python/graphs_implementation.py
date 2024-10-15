@@ -4,7 +4,7 @@ from typing import Deque, List, Optional, Set
 
 class GraphNode:
     
-    def __init__(self, val: int, neighbors: List = []) -> None:
+    def __init__(self, val: int, neighbors: List = None) -> None:
         """Implementation of Graph using Adjacency List
 
         Args:
@@ -12,6 +12,10 @@ class GraphNode:
             neighbors (List, optional): A list stores every edges 
                 which we can access all of a given vertex's neighbor. Defaults to [].
         """
+        
+        if neighbors is None:
+            neighbors = []
+
         self.val = val
         self.neighbors = neighbors
 

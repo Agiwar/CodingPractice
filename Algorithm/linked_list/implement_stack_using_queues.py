@@ -24,12 +24,10 @@ class MyStack:
             # note that "self.queue.append" has been implemented as "self.push" method
             self.push(self.queue.popleft())
         
-        the_most_left_element = self.queue.popleft()
-        return the_most_left_element
+        return self.queue.popleft()
             
     def top(self) -> int:
-        the_most_right_element = self.queue[-1]
-        return the_most_right_element
+        return self.queue[-1]
 
     def empty(self) -> bool:
-        return True if len(self.queue) == 0 else False
+        return len(self.queue) == 0

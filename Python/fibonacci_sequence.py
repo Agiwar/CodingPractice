@@ -8,8 +8,7 @@ import argparse
 def argparse_integer() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--int", type=int)
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def fibonacci_recursive(n: int) -> int:

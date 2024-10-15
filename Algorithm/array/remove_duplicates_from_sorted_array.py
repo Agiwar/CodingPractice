@@ -9,8 +9,7 @@ from typing import List
 def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("sorted_array", type=int, nargs="+")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def remove_duplicates(arr: List[int]) -> int:

@@ -5,8 +5,7 @@ from typing import List
 def argparse_list() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-arr", "--given_arr", type=int, nargs="+")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def bucket_sort(arr: List[int]) -> List[int]:

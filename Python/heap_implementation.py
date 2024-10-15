@@ -28,13 +28,13 @@ class Heap:
     def pop(self):
         if len(self.heap) == 1:
             return None
-        
+
         if len(self.heap) == 2:
             return self.heap.pop()
-        
+
         result = self.heap[1]          # the first value is what we want
         self.heap[1] = self.heap.pop() # to keep heap structure order, the popped value is replaced with last value
-        
+
         i = 1  # pointer of root node
         while (2 * i) < len(self.heap):  # this loop condition is check whether there's a left child
             
@@ -42,23 +42,23 @@ class Heap:
             if ((2 * i + 1) < len(self.heap) and
                 self.heap[2 * i + 1] < self.heap[2 * i] and  # check right child is less than left child
                 self.heap[1] > self.heap[2 * i + 1]):  # check root node is greater than its right child
-                
+
                 # swap right child
                 self.heap[1], self.heap[2 * i + 1] = self.heap[2 * i + 1], self.heap[1]
-                
+
                 # update the pointer to right child
                 i = 2 * i + 1
-            
+
             elif self.heap[1] > self.heap[2 * i]:
                 # swap left child
                 self.heap[1], self.heap[2 * i] = self.heap[2 * i], self.heap[1]
-                
+
                 # update the pointer to left child
-                i = 2 * i
-            
+                i *= 2
+
             else:
                 break
-        
+
         return result
     
     def heapify(self, arr):
