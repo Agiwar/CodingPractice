@@ -52,7 +52,7 @@ def argparse_list() -> argparse.Namespace:
 # third solution
 def count_students(students: List[int], sandwiches: List[int]) -> int:
     if len(students) == 1 and students[0] != sandwiches[0]:
-        return 0
+        return 1
 
     ct = 0
     while students:
