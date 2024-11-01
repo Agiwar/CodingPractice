@@ -8,12 +8,13 @@ def argparse_integer() -> argparse.Namespace:
 
 
 def climb_stairs(n: int) -> int:
-    one, two = 1, 1
-
-    for _ in range(n - 1):
-        one, two = (one + two), one
+    if n <= 2:
+        return n
     
-    return one
+    for _ in range(2, n):
+        a, b = b, (a + b)
+    
+    return b
 
 
 if __name__ == "__main__":
