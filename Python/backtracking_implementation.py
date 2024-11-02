@@ -9,15 +9,24 @@ class TreeNode:
         self.right= right
 
 
-def can_reach_leaf(root: Optional[TreeNode]) -> bool:
+def can_reach_leaf_1(root: Optional[TreeNode]) -> bool:
     if not root or root.val == 0:
         return False
     
     if root.left or root.right:
-        return can_reach_leaf(root.left) or can_reach_leaf(root.right)
+        return can_reach_leaf_1(root.left) or can_reach_leaf_1(root.right)
     else:
         return True
 
+
+def can_reach_leaf_2(root: Optional[TreeNode]) -> bool:
+    if not root or root.val == 0:
+        return False
+    
+    elif not root.left and not root.right:
+        return True
+    
+    return can_reach_leaf_2(root.left) or can_reach_leaf_2(root.right)
 
 
 def leaf_path(root: Optional[TreeNode], path: List) -> bool:
