@@ -33,10 +33,10 @@ def leaf_path(root: Optional[TreeNode], path: List) -> bool:
     if not root or root.val == 0:
         return False
     
-    path.append(root.val)
-
-    if not root.left and not root.right:
+    elif not root.left and not root.right:
         return True
+    
+    path.append(root.val)
     
     if leaf_path(root.left) or leaf_path(root.right):
         return True
