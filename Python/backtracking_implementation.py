@@ -38,12 +38,8 @@ def leaf_path(root: Optional[TreeNode], path: List) -> bool:
     if not root.left and not root.right:
         return True
     
-    if leaf_path(root.left):
-        return True
-    
-    if leaf_path(root.right):
+    if leaf_path(root.left) or leaf_path(root.right):
         return True
     
     path.pop()
-
     return False
