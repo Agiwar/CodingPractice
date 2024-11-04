@@ -59,7 +59,7 @@ def dfs(
     return count
 
 
-# Use BFS to find the shortest path from node to target.
+# Use BFS to find the shortest path from node to target (if there's no way, return -1).
 def bsf(
     node: Optional[GraphNode],
     target: Optional[GraphNode],
@@ -88,3 +88,5 @@ def bsf(
                     queue.append(neighbor)
         
         length += 1
+
+    return -1
