@@ -1,36 +1,33 @@
-from typing import List
+from typing import Dict, List, Set
 
 
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        pre_adj_list = {i: [] for i in range(numCourses)}
-        for cus, pre in prerequisites:
-            pre_adj_list[cus].append(pre)
+    @staticmethod
+    def is_done_dfs(
+        cus: int, 
+        cus_adj_list: Dict[int, List[int]],
+        cus_done: Set[int] = None,
+    ) -> bool:
+        if cus_done is None:
+            cus_done = set()
         
-        cus_done = set()
-
-        # check if each cus can be done
-        def dfs(cus: int) -> bool:
-            # the same cus can't be done twice
-            if cus in cus_done:
-                return False
-            
-            # if cus has no any pre, this cus can be done
-            if pre_adj_list[cus] == []:
-                return True
-            
-            cus_done.add(cus)
-            for pre in pre_adj_list[cus]:
-                if not dfs(pre):
-                    return False
-            
-            cus_done.remove(cus)
-            pre_adj_list[cus] = []
-            return True
+        if cus in cus_done: return False
+        elif cus_adj_list[cus] == []: return True
         
-
-        for cus in range(numCourses):
-            if not dfs(cus):
-                return False
+        cus_done.add(cus)
+        for pre in cus_adj_list[cus]:
+            if not Solution.is_done_dfs(pre, cus_adj_list, cus_done): return False
+        
+        cus_done.remove(cus)
+        cus_adj_list[cus] = []
         
         return True
+        
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        pre_of_each_cus = {cus: [] for cus in range(numCourses)}
+        for cus, pre in prerequisites:
+            pre_of_each_cus[cus].append(pre)
+        
+        return all(
+            Solution.is_done_dfs(cus, pre_of_each_cus) for cus in range(numCourses)
+        )
