@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Dict, Deque, List, Optional, Set
+from typing import Dict, List, Optional, Set
 
 
 # GraphNode is used for adjacency list
@@ -66,15 +66,11 @@ def bsf(
     adj_list: Dict,
 ) -> int:
     
-    visit: Set = set()
-    queue: Deque = deque()
+    # starts with given node
+    visited = {(node)}
+    queue = deque([node])
     
     length = 0
-    
-    # starts with given node
-    visit.add(node)
-    queue.append(node)
-    
     while queue:
         for _ in range(len(queue)):
             curr = queue.popleft()
@@ -83,8 +79,8 @@ def bsf(
                 return length
         
             for neighbor in adj_list[curr]:
-                if neighbor not in visit:
-                    visit.add(neighbor)
+                if neighbor not in visited:
+                    visited.add(neighbor)
                     queue.append(neighbor)
         
         length += 1
