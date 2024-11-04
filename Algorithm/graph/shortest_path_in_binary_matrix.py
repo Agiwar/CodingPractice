@@ -10,7 +10,6 @@ class Solution:
         if grid[0][0] == 1 or grid[rows - 1][cols - 1] == 1:
             return -1
 
-        queue = deque()
         dirs = [
             (1, 0),
             (-1, 0),
@@ -24,7 +23,7 @@ class Solution:
 
         r, c = 0, 0
         visit = {(r, c)}
-        queue.append((r, c))
+        queue = deque([(r, c)])
 
         length = 1
         while queue:
