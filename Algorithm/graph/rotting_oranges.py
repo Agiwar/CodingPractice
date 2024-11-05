@@ -4,6 +4,7 @@ from typing import List
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
+        # sourcery skip: use-itertools-product
         rows = len(grid)
         cols = len(grid[0])
         
