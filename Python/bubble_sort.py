@@ -13,11 +13,11 @@ def bubble_sort_1(nums: List[int]) -> List[int]:
             if nums[i] > nums[i + 1]:
                 need_to_swap = True
                 nums[i], nums[i + 1] = nums[i + 1], nums[i]
-        
-        n -= 1
-        
+
         if not need_to_swap:
             break
+        
+        n -= 1
     
     return nums
 
@@ -35,9 +35,9 @@ def bubble_sort_2(nums: List[int]) -> List[int]:
                 need_to_swap = True
                 nums[i - 1], nums[i] = nums[i], nums[i - 1]
         
-        n -= 1
-        
         if not need_to_swap:
             break
+        
+        n -= 1
     
     return nums
