@@ -10,29 +10,33 @@ class TreeNode:
         
         
 class Solution:
-    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
-
-        def find_min_node(root: Optional[TreeNode]) -> Optional[TreeNode]:
-            curr = root
-            while curr and curr.left:
-                curr = curr.left
-            return curr
+    @staticmethod
+    def find_min_node(root: Optional[TreeNode]) -> Optional[TreeNode]:
+        curr = root
+        while curr and curr.left:
+            curr = curr.left
         
+        return curr
+
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root:
             return None
         
-        if key > root.val:
-            root.right = self.deleteNode(root.right, key)
-        elif key < root.val:
+        if key < root.val:
             root.left = self.deleteNode(root.left, key)
+        
+        elif key > root.val:
+            root.right = self.deleteNode(root.right, key)
+        
+        elif not root.left:
+            return root.right
+        
+        elif not root.right:
+            return root.left
+        
         else:
-            if not root.left:
-                return root.right
-            elif not root.right:
-                return root.left
-            else:
-                min_val_node = find_min_node(root.right)
-                root.val = min_val_node.val
-                root.right = self.deleteNode(root.right, min_val_node.val)
+            min_node = Solution.find_min_node(root.right)
+            root.val = min_node.val
+            root.right = self.deleteNode(root.right, min_node.val)
         
         return root
