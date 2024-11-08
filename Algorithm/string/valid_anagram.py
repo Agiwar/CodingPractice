@@ -1,4 +1,8 @@
-class Solution:
+from collections import defaultdict
+from typing import Dict
+
+
+class Solution1:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
@@ -18,4 +22,28 @@ class Solution:
         
         return (
             all(char_occur == 0 for char_occur in each_char_occur_in_s.values())
+        )
+
+
+class Solution2:
+    # Use Python's built-in defaultdict
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        char_occur: Dict[str, int] = defaultdict(int)
+        for c in s:
+            char_occur[c] += 1
+        
+        for c in t:
+            if c not in char_occur:
+                return False
+            
+            char_occur[c] -= 1
+            
+            if char_occur[c] < 0:
+                return False
+        
+        return (
+            all(occur == 0 for occur in char_occur.values())
         )
