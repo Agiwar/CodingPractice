@@ -66,3 +66,8 @@ class Solution3:
                 return False
         
         return all(occur == 0 for occur in main_string_occur.values())
+
+
+class Solution4:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
