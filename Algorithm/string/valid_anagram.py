@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter, defaultdict
 from typing import Dict
 
 
@@ -47,3 +47,22 @@ class Solution2:
         return (
             all(occur == 0 for occur in char_occur.values())
         )
+
+class Solution3:
+    # Use Python's built-in Counter
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        main_string_occur = dict(Counter(s))
+        
+        for char in t:
+            if char not in main_string_occur:
+                return False
+            
+            main_string_occur[char] -= 1
+            
+            if main_string_occur[char] < 0:
+                return False
+        
+        return all(occur == 0 for occur in main_string_occur.values())
