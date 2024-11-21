@@ -2,8 +2,8 @@ from typing import List
 
 
 def merge_list(test_input_list1: List[int], test_input_list2: List[int]) -> List[int]:
-    if not test_input_list1 and not test_input_list2:
-        return []
+    if not test_input_list1: return test_input_list2
+    elif not test_input_list2: return test_input_list1
 
     merged_list = []
     idx_1, idx_2 = 0, 0
