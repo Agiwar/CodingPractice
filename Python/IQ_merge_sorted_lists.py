@@ -19,9 +19,6 @@ def merge_list(test_input_list1: List[int], test_input_list2: List[int]) -> List
             merged_list.append(test_input_list2[idx_2])
             idx_2 += 1
     
-    if idx_1 < len(test_input_list1):
-        merged_list.extend(test_input_list1[idx_1:])
-    elif idx_2 < len(test_input_list2):
-        merged_list.extend(test_input_list2[idx_2:])
+    merged_list.extend(test_input_list1[idx_1:] or test_input_list2[idx_2:])
     
     return merged_list
