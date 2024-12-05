@@ -1,14 +1,3 @@
-input = [
-    {
-        'key': 'list1',
-        'values': [4,5,2,3,4,5,2,3],
-    },
-    {
-        'key': 'list2',
-        'values': [1,1,34,12,40,3,9,7],
-    }
-]
-
 import math
 from typing import Dict, List
 
