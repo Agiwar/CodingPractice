@@ -1,21 +1,25 @@
--- MySQL
+-- this question is asking how many unique conversations there are
 
-SELECT 
-    COUNT(DISTINCT
-        LEAST(receiver_id, sender_id)
-        , GREATEST(receiver_id, sender_id)
-    ) AS total_conv_threads
+-- for example
+-- id,  receiver_id,    sender_id
+-- 1,   1,              2
+-- 2,   1,              2
+-- 3,   2,              1
+-- 4,   1,              2
+-- 5,   2,              1
+
+-- these 5 threads with id are all the same conversation, use combination of (sender_id, receiver_id) to be PK,
+-- no matter 1 sends to 2, or 2 sends to 1, they are the same conversation
+
+WITH unique_threads AS (
+    SELECT
+        (LEAST(receiver_id, sender_id), GREATEST(receiver_id, sender_id))
+    FROM
+        messenger_sends
+    GROUP BY
+        (LEAST(receiver_id, sender_id), GREATEST(receiver_id, sender_id))
+)
+SELECT
+    COUNT(*) AS total_conv_threads 
 FROM
-    messenger_sends
-
-
--- PostgreSQL: No LEAST nor GREATEST
-
-SELECT 
-    COUNT(DISTINCT
-        CASE WHEN receiver_id < sender_id THEN ROW(receiver_id, sender_id)
-        ELSE ROW(sender_id, receiver_id)
-        END
-    ) AS total_conv_threads
-FROM
-    messenger_sends
+    unique_threads
