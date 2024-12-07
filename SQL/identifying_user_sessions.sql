@@ -8,7 +8,7 @@ WITH each_user_event_min_diff AS (
     FROM
         events
 ),
--- calculate teh cumulative minute difference by each user
+-- calculate the cumulative minute difference by each user
 cumulative_min_diff AS (
     SELECT
         created_at,
