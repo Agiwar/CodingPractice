@@ -18,7 +18,7 @@ cumulative_min_diff AS (
     FROM
         each_user_event_min_diff
 ),
--- define the session time frame, i.e., 0~60, 61~120, 121~180, etc
+-- define the session time frame, e.g., 0~60, 61~120, 121~180, etc
 group_same_session AS (
     SELECT
         created_at,
