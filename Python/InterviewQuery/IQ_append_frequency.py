@@ -45,7 +45,6 @@ def inject_frequency(sentence: str, discard_list: List[str]) -> str:
 
 # optimized solution
 def inject_frequency(sentence: str, discard_list: List[str]) -> str:
-    # using Counter: O(n), and for loop is O(n), so O(2 * n)
     # time = O(n)
     # space = O(n)
     if not sentence: return ""
