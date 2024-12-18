@@ -21,6 +21,8 @@ output = {'ban':1, 'ana':2, 'nan':1}
 
 from collections import defaultdict
 from typing import Dict
+
+
 def get_ngrams(n: int, string: str) -> Dict[str, int]:
     if not string: return {}
     
