@@ -18,7 +18,7 @@
 
 
 
--- Main idea: Use ROW_NUMBER() to generate incremental number to check whether or not the records are consecutive, the same url is the jey point.
+-- Main idea: Use ROW_NUMBER() to generate incremental number to check whether or not the records are consecutive, the same url is the key point.
 
 -- solution:
 
