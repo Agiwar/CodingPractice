@@ -20,6 +20,12 @@
 -- Main idea: Find out each query's all ratings which are all less than three, and count it's percentage.
 
 -- solution 1
+-- time complexity: O(n + 2m)
+-- • CTE: O(n), n is size of table
+-- • Main Query: O(m + m) where doing two times COUNT(), m is the number of unique query (filtered rating < 3)
+
+-- space complexity: O(m)
+
 WITH rating_each_query AS (
     SELECT
         query,
@@ -39,6 +45,11 @@ WHERE
 
 
 -- solution 2:
+-- time complexity: O(n + m)
+-- • CTE: O(n), n is size of table
+-- • Main Query: O(m) just doing one time aggregation, m is the number of unique query (filtered rating < 3)
+
+-- space complexity: O(m)
 WITH rating_each_query AS (
     SELECT
         query,
