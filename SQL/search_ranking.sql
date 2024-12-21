@@ -17,9 +17,10 @@
 
 
 
--- solution: find out each query's all ratings are less than three
+-- Main idea: Find out each query's all ratings which are all less than three, and count it's percentage.
 
-WITH ratings_each_query AS (
+-- solution 1
+WITH rating_each_query AS (
     SELECT
         query,
         COUNT(ratings) AS total_ratings,
@@ -32,6 +33,23 @@ WITH ratings_each_query AS (
 SELECT
     ROUND(COUNT(query)::NUMERIC / (SELECT COUNT(query) FROM ratings_each_query)::NUMERIC, 2) AS percentage_less_than_3
 From
-    ratings_each_query
+    rating_each_query
 WHERE
     total_ratings = total_less_than_3_ratings;
+
+
+-- solution 2:
+WITH rating_each_query AS (
+    SELECT
+        query,
+        COUNT(rating) AS total_ratings,
+        SUM(CASE WHEN rating < 3 THEN 1 ELSE 0 END) AS total_less_than_3_ratings
+    FROM
+        search_results
+    GROUP BY
+        query
+)
+SELECT
+    ROUND(AVG((total_ratings = total_less_than_3_ratings)::INT), 2) AS percentage_less_than_3
+FROM
+    rating_each_query
