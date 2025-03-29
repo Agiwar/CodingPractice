@@ -1,0 +1,35 @@
+{
+    "cells": [
+        {
+            "kind": "code",
+            "source": "database(\"Samples\").table(\"StormEvents\")\n| take 10",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "database(\"Samples\").table(\"StormEvents\")\n| summarize max(StartTime), min(StartTime)",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "database(\"Samples\").table(\"StormEvents\")\n| count",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "database(\"Samples\").table(\"StormEvents\")\n| where\n    StartTime between (datetime(2007-06-01) .. datetime(2007-12-31))\n| summarize\n    EventCounts = count()\n        by EventType",
+            "outputs": []
+        },
+        {
+            "kind": "code",
+            "source": "",
+            "outputs": []
+        }
+    ],
+    "metadata": {
+        "connection": {
+            "cluster": "https://help.kusto.windows.net",
+            "database": "Samples"
+        }
+    }
+}
