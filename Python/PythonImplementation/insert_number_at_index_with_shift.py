@@ -1,3 +1,10 @@
+"""
+Insert Number in Fixed-Size Array
+
+Given a fixed-size array arr, a number num, and an index i,
+insert num at position i while maintaining the array's original size.
+"""
+
 def insert_num_fixed_arr(
     arr: list[int] | None,
     num: int | None,
