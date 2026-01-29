@@ -31,3 +31,30 @@ if __name__ == "__main__":
 
     # given 0 0 1 1 1 2 2 3 3 4, you may get 5
     print(num_nonduplicated_element)
+
+
+
+
+
+
+
+def remove_duplicates_array(nums: list[int]) -> int:
+    # nums is ordered, [1, 1, 2, 3, 3, 5]
+    # expected k = 4, nums = [1, 2, 3, 5]
+
+    # k >= 1, if k = 1, there must be a unique number in nums
+
+    # time = O(n)
+    # space = O(1)
+
+    if k == 1:
+        return k
+
+    k = 1
+    for idx in range(1, len(nums)):
+        if nums[idx - 1] != nums[idx]:
+            nums[k] = nums[idx]
+            k += 1
+
+    return k
+            

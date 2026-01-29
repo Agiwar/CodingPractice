@@ -28,3 +28,24 @@ if __name__ == "__main__":
 
     # given 0 1 2 2 3 0 4 2, you may get 5
     print(num_after_remove_occurrences)
+
+
+
+def get_non_targeted_num_occur(nums: list[int], val: int) -> int:
+    # nums = [2, 3, 2, 1, 5, 3, 3]
+    # val = 3
+    # expected k = 4, nums = [2, 2, 1, 5]
+    
+    # len(nums) = 0 >> 0
+    # len(nums) = 1 and nums[0] = val >> 0
+
+    if not nums:
+        return 0
+
+    k = 0
+    for idx in range(len(nums)):
+        if nums[idx] != val:
+            nums[k] = nums[idx]
+            k += 1
+
+    return k
