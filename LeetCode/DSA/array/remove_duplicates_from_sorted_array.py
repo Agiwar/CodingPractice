@@ -1,60 +1,45 @@
-import argparse
 from typing import List
 
-# remove duplicates from a sorted array my_arr = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
-# use one pointer to indicate the number of non-duplicated element in array
-# use another pointer to go through entire array to check whether the current elelment is duplicated or not.
+
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # nums = [1, 1, 2]  >>  k = 2, nums = [1, 2]
+        # nums = [0,0,1,1,1,2,2,3,3,4]  >>  k = 5, nums = [0, 1, 2, 3, 4]
+        
+        # len(nums) must be greater or equal to 1, so if nums = [1]  >>  k = 1, nums = [1]
+        # must have k = 1
+
+        # nums is orders, if nums = [0, 1, 4, 4, 5, 6, 6]  >>  k = 5, nums = [0, 1, 4, 5, 6]
+        # nums = [-3, -3, -1, 0, 0, 3, 5, 5]  >>  k = 5, nums = [-3, -1, 0, 3, 5]
+
+        if len(nums) == 1:
+            return 1
+
+        k = 1
+        for idx in range(1, len(nums)):
+            if nums[idx - 1] != nums[idx]:
+                # cuz new number, overwrite before, avoid see the same num (nums is ordered)
+                nums[k] = nums[idx]
+                k += 1
+
+        return k
 
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("sorted_array", type=int, nargs="+")
-    return parser.parse_args()
+removeDuplicates = Solution().removeDuplicates
 
 
-def remove_duplicates(arr: List[int]) -> int:
-    # the first element must be unique
-    # so the pointer we use to indicate duplicated or not can be started from second position
-    
-    L = 1
-    for R in range(L, len(arr)):
-        if arr[R - 1] != arr[R]:
-            arr[L] = arr[R]
-            L += 1
-    return L
+def test_removeDuplicates():
+    # LeetCode examples
+    assert removeDuplicates([1, 1, 2]) == 2
+    assert removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]) == 5
+
+    assert removeDuplicates([1]) == 1
+    assert removeDuplicates([0, 1, 4, 4, 5, 6, 6]) == 5
+    assert removeDuplicates([-3, -3, -1, 0, 0, 3, 5, 5]) == 5
+
+
+    print("All tests passed")
 
 
 if __name__ == "__main__":
-    args = argparse_list()
-    sorted_array = args.sorted_array
-    num_nonduplicated_element = remove_duplicates(sorted_array)
-
-    # given 0 0 1 1 1 2 2 3 3 4, you may get 5
-    print(num_nonduplicated_element)
-
-
-
-
-
-
-
-def remove_duplicates_array(nums: list[int]) -> int:
-    # nums is ordered, [1, 1, 2, 3, 3, 5]
-    # expected k = 4, nums = [1, 2, 3, 5]
-
-    # k >= 1, if k = 1, there must be a unique number in nums
-
-    # time = O(n)
-    # space = O(1)
-
-    if k == 1:
-        return k
-
-    k = 1
-    for idx in range(1, len(nums)):
-        if nums[idx - 1] != nums[idx]:
-            nums[k] = nums[idx]
-            k += 1
-
-    return k
-            
+    test_removeDuplicates()
