@@ -1,36 +1,35 @@
-import argparse
 from typing import List
 
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("given_array", type=int, nargs="+")
-    return parser.parse_args()
+class Solution:
+    def getConcatenation(self, nums: List[int]) -> List[int]:
+        """
+        time = O(n)
+        space = O(n)
+        """
+        n = len(nums)
+        ans = [0] * (n * 2)
+        for idx in range(n):
+            ans[idx], ans[idx + n] = nums[idx], nums[idx]
+        
+        return ans
 
 
-def concatenate_array(arr: List[int]) -> List[int]:
-    # 1. python has built-in concatenation of arrays and strings
-    # return arr + arr
-    
-    # 2. intuitively for loop
-    # res = []
-    # for _ in range(2):
-    #     for num in arr:
-    #         res.append(num)
-    # return res
-    
-    # 3.
-    arr_copy = arr.copy()
-    arr_copy.extend(iter)
-    # for item in arr:
-    #     arr_copy.append(item)
-    return arr_copy
+getConcatenation = Solution().getConcatenation
+
+
+def test_getConcatenation():
+    # LeetCode examples
+    assert getConcatenation([1, 2, 1]) == [1, 2, 1, 1, 2, 1]
+    assert getConcatenation([1, 3, 2, 1]) == [1, 3, 2, 1, 1, 3, 2, 1]
+
+    # Edge cases (write your own)
+    assert getConcatenation([1]) == [1, 1]
+    assert getConcatenation([1, 2]) == [1, 2, 1, 2]
+    assert getConcatenation([9, 2, 8, 1, 1]) == [9, 2, 8, 1, 1, 9, 2, 8, 1, 1]
+
+    print("All tests passed")
 
 
 if __name__ == "__main__":
-    args = argparse_list()
-    given_arr = args.given_array
-    concatenation_of_arr = concatenate_array(given_arr)
-
-    # given 1 2 1, you may get 1 2 1 1 2 1
-    print(concatenation_of_arr)
+    test_getConcatenation()
