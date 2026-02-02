@@ -12,16 +12,28 @@ class Solution:
         # nums is orders, if nums = [0, 1, 4, 4, 5, 6, 6]  >>  k = 5, nums = [0, 1, 4, 5, 6]
         # nums = [-3, -3, -1, 0, 0, 3, 5, 5]  >>  k = 5, nums = [-3, -1, 0, 3, 5]
 
+        # below ia not counting correct, cuz below is only do DEDUPLICATE
+        # if len(nums) == 1:
+        #     return 1
+
+        # k = 1
+        # for idx in range(1, len(nums)):
+        #     if nums[idx - 1] != nums[idx]:
+        #         nums[k] = nums[idx]
+        #         k += 1
+
+        # return run
+        
+        # below is the generic pattern for such remove duplicates question
         if len(nums) == 1:
             return 1
-
+        
         k = 1
         for idx in range(1, len(nums)):
-            if nums[idx - 1] != nums[idx]:
-                # cuz new number, overwrite before, avoid see the same num (nums is ordered)
+            if nums[idx] != nums[k - 1]:
                 nums[k] = nums[idx]
                 k += 1
-
+        
         return k
 
 
