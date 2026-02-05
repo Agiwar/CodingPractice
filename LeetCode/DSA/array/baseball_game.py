@@ -1,33 +1,70 @@
-import argparse
 from typing import List
 
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("given_operations", type=str, nargs="+")
-    return parser.parse_args()
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        """
+        time = O(n + m + m) ~ O(n + m) ~ O(n)
+            n = len(operations), m = len(scores), sum() is also O(m)
+            n >> m
+        
+        space = O(m)
+        """
+        scores = []
+
+        for item in operations:
+            if item == "+":
+                scores.append(scores[-1] + scores[-2])
+            
+            elif item == "C":
+                scores.pop()
+            
+            elif item == "D":
+                scores.append(scores[-1] * 2)
+            
+            else:
+                scores.append(int(item))
+        
+        return sum(scores)
+                
 
 
-def cal_points(operations: List[str]) -> int:
-    record = []
+calPoints = Solution().calPoints
 
-    for operation in operations:
-        if operation == "D":
-            record.append(record[-1] * 2)
-        elif operation == "C":
-            record.pop()
-        elif operation == "+":
-            record.append(record[-1] + record[-2])
-        else:
-            record.append(int(operation))
-    
-    return sum(record)
+
+def test_calPoints():
+    # LeetCode examples
+    assert calPoints(["5", "2", "C", "D", "+"]) == 30
+    assert calPoints(["5", "-2", "4", "C", "D", "9", "+", "+"]) == 27
+    assert calPoints(["1", "C"]) == 0
+
+    # Edge cases
+    assert calPoints(["4", "D"]) == 12
+    assert calPoints(["0", "D"]) == 0
+    assert calPoints(["1", "D"]) == 3
+    assert calPoints(["0", "0", "D", "+"]) == 0
+    assert calPoints(["7", "-7", "D", "3", "+", "C", 4, "+"]) == 0
+
+    try:
+        calPoints(["C"])
+        assert False, "Must be integer."
+    except ValueError:
+        pass
+
+    try:
+        calPoints(["D"])
+        assert False, "Must be integer."
+    except ValueError:
+        pass
+
+    try:
+        calPoints(["5", "+"])
+        assert False, "Must be integer."
+    except ValueError:
+        pass
+
+    print("All tests passed")
 
 
 if __name__ == "__main__":
-    args = argparse_list()
-    given_operations = args.given_operations
-    baseball_game_record = cal_points(given_operations)
-
-    # given "5" "2" "C" "D" "+", you may get 30
-    print(baseball_game_record)
+    test_calPoints()
