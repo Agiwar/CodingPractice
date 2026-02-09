@@ -3,11 +3,28 @@ from typing import List
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        target_diff = {}
+        """
+        The key concept behind the code is
+        calculate the difference between current number and target.
+        
+        For each current number while looping, store its difference by target in a hashmap,
+        and if the current which is the seen number's difference in hashmap, that's the answer.
+
+        nums.length is at least 2, must have an exactly solution (num1 + num2)
+
+        time = O(n)
+        space = O(n) cuz need to return number's index, so need a hashmap to store index
+            regardless of sorted input array < sorting takes O(n * log n) >
+        
+        follow-up: what if input array is sorted, consider using two-pointer,
+            so the time = O(n), space(1) due to unnecessary index hashmap 
+        """
+
+        diff_map = {}
         for idx, num in enumerate(nums):
-            if num in target_diff:
-                return [target_diff[num], idx]
-            target_diff[target - num] = idx
+            if num in diff_map:
+                return [diff_map[num], idx]
+            diff_map[target - num] = idx
 
 
 
