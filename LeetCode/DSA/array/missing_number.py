@@ -1,20 +1,15 @@
 from typing import List
 
+
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        pass
+        # Given an array nums containing n distinct numbers in the range [0, n]  << included both sides
+        # but there's a missing number in nums, find out it.
 
-missingNumber = Solution().missingNumber
+        expected_sum = sum(range(len(nums) + 1))  # time = O(n)
+        actual_sum = sum(nums)  # time = O(n)
+        
+        # overall time = O(n)
+        # space = O(1)
 
-def test_missingNumber():
-    # LeetCode examples
-    assert missingNumber([3,0,1]) == 2
-    assert missingNumber([0,1]) == 2
-    assert missingNumber([9,6,4,2,3,5,7,0,1]) == 8
-
-    # Edge cases (write your own)
-
-    print("All tests passed")
-
-if __name__ == "__main__":
-    test_missingNumber()
+        return expected_sum - actual_sum
