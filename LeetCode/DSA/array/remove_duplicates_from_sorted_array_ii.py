@@ -23,9 +23,13 @@ class Solution:
         time = O(n)
         space = (1), in-place manipulation
         """
+        
+        n = len(nums)
+        if n <= 2:
+            return n
 
         idx_w = 2
-        for idx_r in range(2, len(nums)):
+        for idx_r in range(2, n):
             if nums[idx_r] != nums[idx_w - 2]:
                 nums[idx_w] = nums[idx_r]
                 idx_w += 1
