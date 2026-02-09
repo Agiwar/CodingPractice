@@ -3,38 +3,34 @@ from typing import List
 
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        # nums = [1, 1, 2]  >>  k = 2, nums = [1, 2]
-        # nums = [0,0,1,1,1,2,2,3,3,4]  >>  k = 5, nums = [0, 1, 2, 3, 4]
-        
-        # len(nums) must be greater or equal to 1, so if nums = [1]  >>  k = 1, nums = [1]
-        # must have k = 1
+        """
+        Given a sorted array, each number can only seen once,
+            and the nums.length has at lease value of one,
+            it means the return result has at least one (this only number must be unique).
 
-        # nums is orders, if nums = [0, 1, 4, 4, 5, 6, 6]  >>  k = 5, nums = [0, 1, 4, 5, 6]
-        # nums = [-3, -3, -1, 0, 0, 3, 5, 5]  >>  k = 5, nums = [-3, -1, 0, 3, 5]
-
-        # below ia not counting correct, cuz below is only do DEDUPLICATE
-        # if len(nums) == 1:
-        #     return 1
-
-        # k = 1
-        # for idx in range(1, len(nums)):
-        #     if nums[idx - 1] != nums[idx]:
-        #         nums[k] = nums[idx]
-        #         k += 1
-
-        # return run
+        So we can directly get started at 2nd number (1-idx) to check
+            the current number should be removed or not,
+            and use the different number value to replace the needed-removed number
         
-        # below is the generic pattern for such remove duplicates question
-        if len(nums) == 1:
-            return 1
+        The key is that array is already sorted,
+            so if the current number is not equal to seen number's previous one
+            it guarantees the current number is the unseen number.
         
-        k = 1
-        for idx in range(1, len(nums)):
-            if nums[idx] != nums[k - 1]:
-                nums[k] = nums[idx]
-                k += 1
+        Define the writer (idx_w) and reader (idx_r), respectively
+            idx_w defines the current position's number should be re-written or not
+            idx_r goes through entire array until find out the unseen number
         
-        return k
+        time = O(n)
+        space = O(1), in-place manipulation
+        """
+
+        idx_w = 1
+        for idx_r in range(1, len(nums)):
+            if nums[idx_r] != nums[idx_w - 1]:
+                nums[idx_w] = nums[idx_r]
+                idx_w += 1
+        
+        return idx_w
 
 
 removeDuplicates = Solution().removeDuplicates
