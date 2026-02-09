@@ -3,20 +3,34 @@ from typing import List
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         """
+        The max profit from investing stock is buy in with low price, sell out with high price
+
+        The main idea behind code is that
+            we track the current price is strictly less than the last buy's price,
+            if yes, a lower price we found, so need to pick this value to buy
+            and there's a sell pointer going through entire prices
+            before the next day coming, calculate the current profit is max or not
+            note buy and sell can't happen on the same day,
+            so if prices.length is 1, which we can only buy, can't sell, no profit get
+            initialize the max profit is zero
+        
         time = O(n)
         space = O(1)
         """
-        if len(prices) == 1:
+
+        n = len(prices)
+        if n == 1:
             return 0
         
         buy = prices[0]
-        profit = 0
-        for sell_day in range(1, len(prices)):
+        max_profit = 0
+
+        for sell_day in range(1, n):
             if (sell := prices[sell_day]) < buy:
                 buy = sell
             
-            profit = max(profit, sell - buy)
-        return profit or 0
+            max_profit = max(max_profit, sell - buy)
+        return max_profit
         
 
 maxProfit = Solution().maxProfit
