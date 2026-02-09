@@ -4,22 +4,30 @@ from typing import List
 class Solution:
     def sortArrayByParity(self, nums: List[int]) -> List[int]:
         """
+        The input array is not sorted, but the requirement is siple
+            just move all even coming before all odd
+        
+        Define writer (idx_w) and reader (idx_r), respectively
+            idx_w keeps tracking the current value is odd or not
+            idx_r goes through entire array until find out the even number
+            to replace the current odd value
+        
+        The main idea behind code is using swap to change the position of odd and even
+        If input array has length of 1, can directly the original input
+
         time = O(n)
         space = O(1)
         """
-        # [3, 1, 2, 4] -> [2, 4, 3, 1] the order doesn’t matter, as long as even number come before odd
-        # define writer pointer and reader pointer,
-        # check the current reader number can replace the value of writer’s position
-        # the writer position must be on the odd number, and reader position has the value of even number
 
-        if len(nums) == 1:
+        n = len(nums)
+        if n == 1:
             return nums
         
-        idx_writer = 0
-        for idx_reader in range(len(nums)):
-            if nums[idx_reader] % 2 == 0:
-                nums[idx_writer], nums[idx_reader] = nums[idx_reader], nums[idx_writer]
-                idx_writer += 1
+        idx_w = 0
+        for idx_r in range(n):
+            if nums[idx_r] % 2 == 0:
+                nums[idx_w], nums[idx_r] = nums[idx_r], nums[idx_w]
+                idx_w += 1
         
         return nums
 
