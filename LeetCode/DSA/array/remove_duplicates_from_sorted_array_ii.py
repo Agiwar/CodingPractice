@@ -4,32 +4,33 @@ from typing import List
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         """
+        The input array nums is already sorted, and we can only keep the seen number twice.
+            the nums.length has at least value of 1, if is one, return 1
+            and can be 2, it means we can directly return two
+            regardless of these two number are the same.
+        
+        Cuz nums is sorted,
+            if the current number is not equal to the seen number's previous two's value
+            then, this number must not be the seen number's position's previous one.
+
+        So we can just get started at the 3rd number (2-idx)
+            to check the current number should be re-written
+        
+        Define writer (idx_w) and reader (idx_r), respectively
+            idx_w handles the current position's number should be re-written or not
+            idx_r goes through entire array until we find out the unseen number
+        
         time = O(n)
-        space = O(1)
+        space = (1), in-place manipulation
         """
-        # [1,1,1,2,2,3]  >>  k = 5, nums = [1, 1, 2, 2, 3]
-        # [0,0,1,1,1,1,2,3,3]  >>  k = 7, nums = [0, 0, 1, 1, 2, 3, 3]
 
-        # len(nums) >= 1, so k >= 1, e.g., nums[1]  >>  k = 1, nums = [1]
-        # if len(nums) != 1, so there must be 2 number  >>  k at least 2
-        # nums[1, 1]  >>  k = 2, nums = [1, 1]
-        # nums[1, 2]  >>  k = 2, nums = [1, 2]
-        # nums[1, 1, 1]  >>  k = 2 nums = [1, 1]
-        # nums[1, 1, 2]  >>  k  = 3, nums = [1, 1, 2]
-        # nums[1, 1, 1, 2]  >>  k = 3, nums = [1, 1, 2]
-        # nums[1, 1, 2, 2]  >>  k = 4, nums = [1, 1, 2, 2]
-
-
-        if len(nums) <= 2:
-            return len(nums)
-
-        k = 2
-        for idx in range(2, len(nums)):
-            if nums[idx] != nums[k - 2]:
-                nums[k] = nums[idx]
-                k += 1
-
-        return k
+        idx_w = 2
+        for idx_r in range(2, len(nums)):
+            if nums[idx_r] != nums[idx_w - 2]:
+                nums[idx_w] = nums[idx_r]
+                idx_w += 1
+        
+        return idx_w
 
 
 
