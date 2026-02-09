@@ -1,31 +1,41 @@
 from typing import List
 
 class Solution:
-    def maxArea(self, height: list[int]) -> int:
+    def maxArea(self, height: List[int]) -> int:
         """
-        time = O(n)
-        space = O(1)
-        """
-        # [1,8,6,2,5,4,8,3,7]-> 49
-        # [1, 1] -> 1
-        # [0, 1, 2, 3, 4, 5] -> 6
-        # [0, 0, 4, 4, 2] -> 4
-        # [1, 2, 3, 4, 3, 2, 1] -> 8
+        Given a height array which is representing the wall's height at specific position
 
-        y_L = 0
-        y_R = len(height) - 1
+        There must be 2 walls but the wall's hright may be zero,
+            which means there's no any water could be stored.
+
+        The max area the container can store is
+            calculate the area by wall's height * wall's interval for the current two walls
+        
+        Define two walls' index, left wall (wall_L) and right wall (wall_w), respectively
+            initial max_area is zero
+            and when wall_L's height i strictly less than wall_R's,
+            then move wall_L by one interval, cuz there's an chance to get higher wall_L
+            otherwise move wall_R by minus one interval 
+            for each looping, calculate the max_area which is 
+            compared with current max_area and the current_area
+        
+        Note that wall_L cannot be overlapped with wall_R
+        """
+
+        wall_L = 0
+        wall_R = len(height) - 1
         max_area = 0
 
-        while y_L < y_R:
-            valid_y = min(height[y_L], height[y_R])
-            interval = y_R - y_L
-            max_area = max(max_area, interval * valid_y)
+        while wall_L < wall_R:
+            wall_height = min(height[wall_L], height[wall_R])
+            interval = wall_R - wall_L
+            max_area = max(max_area, wall_height * interval)
 
-            if height[y_L] <= height[y_R]:
-                y_L += 1
+            if height[wall_L] < height[wall_R]:
+                wall_L += 1
             else:
-                y_R -= 1
-
+                wall_R -= 1
+        
         return max_area
 
 
