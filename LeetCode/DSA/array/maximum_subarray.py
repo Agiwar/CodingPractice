@@ -14,24 +14,18 @@ class Solution:
         time = O(n)
         space = O(1)
         """
-
-        if len(nums) == 1:
-            return nums[0]
         
         curr_sum = 0
         max_sum = nums[0]
         idx = 0
         
-        while idx < len(nums):
+        for idx in range(nums):
             curr_sum += nums[idx]
             max_sum = max(max_sum, curr_sum)
             
             if curr_sum < 0:
                 curr_sum = 0
-                idx += 1
                 continue
-            
-            idx += 1
         
         return max_sum
 
