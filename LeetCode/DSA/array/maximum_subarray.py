@@ -17,15 +17,13 @@ class Solution:
         
         curr_sum = 0
         max_sum = nums[0]
-        idx = 0
         
-        for idx in range(nums):
-            curr_sum += nums[idx]
+        for num in nums:
+            curr_sum += num
             max_sum = max(max_sum, curr_sum)
             
             if curr_sum < 0:
                 curr_sum = 0
-                continue
         
         return max_sum
 
