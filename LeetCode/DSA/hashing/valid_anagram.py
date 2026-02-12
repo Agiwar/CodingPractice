@@ -17,6 +17,11 @@ class Solution:
         time = O(n)
         space = O(k), k is number of unique char, but can say O(1),
             cuz letter only contains lowercase english
+            
+        Follow up: What if the inputs contain Unicode characters?
+            How would you adapt your solution to such a case?
+        time = O(n)
+        space = O(k), k is number of unique char, Counter handles it gracefully
         """
 
         from collections import Counter
