@@ -2,7 +2,22 @@ from typing import List
 
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        pass
+        """
+        time = O(n * k * log n), k is number of unique anagrams
+        space = O(k)
+        """
+        if len(strs) == 1:
+            return [strs]
+        
+        from collections import defaultdict
+        
+        str_occurs = defaultdict(list)
+
+        for word in strs:
+            group = "".join(sorted(word))
+            str_occurs[group].append(word)
+        
+        return list(str_occurs.values())
 
 groupAnagrams = Solution().groupAnagrams
 
