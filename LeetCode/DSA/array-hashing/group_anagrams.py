@@ -3,7 +3,7 @@ from typing import List
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         """
-        time = O(n * k * log k), k is number of unique anagrams
+        time = O(n * k * log k), k is max length of each word
         space = O(n * k), store n words, each word has maximum length of k
         """
         
