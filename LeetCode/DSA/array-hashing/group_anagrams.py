@@ -6,8 +6,6 @@ class Solution:
         time = O(n * k * log k), k is number of unique anagrams
         space = O(n * k), store n words, each word has maximum length of k
         """
-        if len(strs) == 1:
-            return [strs]
         
         from collections import defaultdict
         
