@@ -22,14 +22,10 @@ class Solution:
 
         intervals.sort(key=lambda x: x[0])
 
-        for curr_meeting, next_meeting in zip(intervals[:-1], intervals[1:]):
-
-            if not (
-                (curr_end := curr_meeting[1]) <= (next_start := next_meeting[0])
-            ):
-                return False
-
-        return True
+        return all(
+            intervals[i - 1][1] <= intervals[i][0]
+            for i in range(1, len(intervals))
+        )
 
 
 canAttendMeetings = Solution().canAttendMeetings
