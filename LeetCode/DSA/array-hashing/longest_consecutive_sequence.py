@@ -19,9 +19,7 @@ class Solution:
 
         starts = {num for num in nums_set if num - 1 not in nums_set}
 
-        ct = 1
         max_ct = 1
-
         for start in starts:
             curr_num = start
             ct = 1
