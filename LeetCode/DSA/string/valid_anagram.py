@@ -1,73 +1,49 @@
-from collections import Counter, defaultdict
-from typing import Dict
+from typing import List
 
-
-class Solution1:
+class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
-        
-        each_char_occur_in_s = {}
-        for c in s:
-            each_char_occur_in_s[c] = each_char_occur_in_s.get(c, 0) + 1
-        
-        for c in t:
-            if c not in each_char_occur_in_s:
-                return False
-            
-            each_char_occur_in_s[c] -= 1
-            
-            if each_char_occur_in_s[c] < 0:
-                return False
-        
-        return (
-            all(char_occur == 0 for char_occur in each_char_occur_in_s.values())
-        )
+        """
+        s and t must have a minimum length of 1, so if both of them are 1, s[0] != t[0], then False
+            and obviously, if s.length is not equal to t.length, return False directly
 
+        The main idea behind my code is calculate the occurrence of each char for s and t,
+            if the different type of char of occurrence in s and t is the same,
+            it means t can be re-arranged in somewhat way to be s
 
-class Solution2:
-    # Use Python's built-in defaultdict
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
+        s = "anagram", t = "nagaram" -> True
+        s = "rat", t = "car" -> False
         
-        char_occur: Dict[str, int] = defaultdict(int)
-        for c in s:
-            char_occur[c] += 1
-        
-        for c in t:
-            if c not in char_occur:
-                return False
+        using Counter:
+        time = O(n)
+        space = O(k), k is number of unique char, but can say O(1),
+            cuz letter only contains lowercase english
             
-            char_occur[c] -= 1
-            
-            if char_occur[c] < 0:
-                return False
-        
-        return (
-            all(occur == 0 for occur in char_occur.values())
-        )
+        Follow up: What if the inputs contain Unicode characters?
+            How would you adapt your solution to such a case?
+        time = O(n)
+        space = O(k), k is number of unique char, Counter handles it gracefully
+        """
 
-class Solution3:
-    # Use Python's built-in Counter
-    def isAnagram(self, s: str, t: str) -> bool:
-        if len(s) != len(t):
-            return False
-        
-        main_string_occur = dict(Counter(s))
-        
-        for char in t:
-            if char not in main_string_occur:
-                return False
-            
-            main_string_occur[char] -= 1
-            
-            if main_string_occur[char] < 0:
-                return False
-        
-        return all(occur == 0 for occur in main_string_occur.values())
-
-
-class Solution4:
-    def isAnagram(self, s: str, t: str) -> bool:
+        from collections import Counter
         return Counter(s) == Counter(t)
+
+
+
+isAnagram = Solution().isAnagram
+
+def test_isAnagram():
+    assert isAnagram("anagram", "nagaram") == True
+    assert isAnagram("rat", "car") == False
+
+    # Edge cases
+    assert isAnagram("a", "b") == False
+    assert isAnagram("ab", "b") == False
+    assert isAnagram("aab", "abb") == False
+    assert isAnagram("google", "elgoog") == True
+    assert isAnagram("xxx", "xxx") == True
+
+
+    print("All tests passed")
+
+if __name__ == "__main__":
+    test_isAnagram()
