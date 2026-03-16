@@ -25,24 +25,21 @@ class Solution:
             and the edge case is that this nums has length of 1
 
         time = O(n)
-        space = O(1)
+        space = O(n)
         """
         
-        if len(nums) == 1:
-            return 1 if nums[0] == k else 0
-        
         curr_sum = 0
-        res = 0
-        prefix_sums = {0: 1}
+        ct = 0
+        prefix_sums = {0: 1}  # the first num has no prefix sum
         
         for num in nums:
             curr_sum += num
             diff = curr_sum - k
             
-            res += prefix_sums.get(diff, 0)
+            ct += prefix_sums.get(diff, 0)
             prefix_sums[curr_sum] = prefix_sums.get(curr_sum, 0) + 1
         
-        return res
+        return ct
 
 
 
