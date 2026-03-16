@@ -28,10 +28,11 @@ class Solution:
         space = O(n)
         """
         
+        # nums = [1, 2, 3, -2, 2]，k = 5
         curr_sum = 0
         ct = 0
-        prefix_sums = {0: 1}  # the first num has no prefix sum
         
+        prefix_sums = {0: 1}  # the first num has no prefix sum, has one zero-prefixSum
         for num in nums:
             curr_sum += num
             diff = curr_sum - k
