@@ -14,7 +14,12 @@ class Solution:
         time = O(n)
         space = O(1)
         """
-
+        
+        # string manipulation and pythonic
+        # s = "".join(filter(str.isalnum, s.lower()))
+        # return s == s[::-1]
+        
+        # interview-expected
         left, right = 0, len(s) - 1
         while left < right:
             while left < right and not s[left].isalnum():
