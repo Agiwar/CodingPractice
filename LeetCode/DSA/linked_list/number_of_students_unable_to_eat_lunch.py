@@ -1,82 +1,70 @@
-import argparse
 from typing import List
 
+class Solution:
+    def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        """
+        the main idea behind the code is doing while looping to check the first student is fit first sandwich or not,
+            the relevant order of sandwiches is immutable (exclude the first sandwich consumed)
+            if the student doesn't have their favorite sandwich, pop this student and append it in last position
+            if student has sandwich, continue consuming until they don't
+            pop first student and append student both takes O(1) time,
+            but making sure all students they've seen the first sandwich, needs to traversing students
+            edge case is students.length is one, if the only one student doesn't have their preferred sandwich,
+            return 1 directly, on the other hand, if students and sandwiches are identical, return 0 directly
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-stu", "--students", type=int, nargs="+")
-    parser.add_argument("-sand", "--sandwiches", type=int, nargs="+")
-    return parser.parse_args()
-
-
-# first submission
-# def count_students(students: List[int], sandwiches: List[int]) -> int:
-#     if sum(students) == sum(sandwiches):
-#         while students:
-#             if students[0] == sandwiches[0]:
-#                 students.pop(0)
-#                 sandwiches.pop(0)
-#             else:
-#                 students.append(students.pop(0))
-#         return 0
-#     else:
-#         ct = 0
-#         while students:
-#             if students[0] == sandwiches[0]:
-#                 ct = 0
-#                 students.pop(0)
-#                 sandwiches.pop(0)
-#             else:
-#                 ct += 1
-#                 if sandwiches[0] not in students and ct == len(students):
-#                     return ct
-#                 students.append(students.pop(0))
-
-
-# second submission
-# def count_students(students: List[int], sandwiches: List[int]) -> int:
-#     ct = 0
-#     while students:
-#         if students[0] == sandwiches[0]:
-#             ct = 0
-#             students.pop(0)
-#             sandwiches.pop(0)
-#         else:
-#             ct += 1
-#             if sandwiches[0] not in students and ct == len(students):
-#                 return ct
-#             students.append(students.pop(0))
-#     return ct
-
-
-# third solution
-def count_students(students: List[int], sandwiches: List[int]) -> int:
-    if len(students) == 1 and students[0] != sandwiches[0]:
-        return 1
-
-    ct = 0
-    while students:
-        if students[0] == sandwiches[0]:
-            students.pop(0)
-            sandwiches.pop(0)
-            ct = 0
+        time = O(n^2), n is student.length
+        space = O(1)
+        """
         
-        else:
-            students.append(students.pop(0))
-            ct += 1
+        if len(students) == 1 and students[0] != sandwiches[0]:
+            return 1
+        
+        elif students == sandwiches:
+            return 0
+        
+        idx = 0
+        ct_students = len(students)
+        seen = 0
+        
+        while idx < ct_students:
+            sandwich = sandwiches[idx]
             
-            if ct == len(students):
-                break
-    
-    return ct
+            if students[idx] != sandwich:
+                seen += 1
+                
+                if seen == ct_students:
+                    break
+                
+                students.append(students.pop(idx))  # pop(0) is O(n) time not O(1)
+            
+            else:
+                students.pop(idx)
+                sandwiches.pop(idx)
+                ct_students -= 1
+                seen = 0
+        
+        return ct_students
 
+
+countStudents = Solution().countStudents
+
+def test_countStudents():
+    assert countStudents([1,1,0,0], [0,1,0,1]) == 0
+    assert countStudents([1,1,1,0,0,1], [1,0,0,0,1,1]) == 3
+
+    # Edge cases
+    assert countStudents([0], [0]) == 0
+    assert countStudents([1], [1]) == 0
+    assert countStudents([1], [0]) == 1
+    assert countStudents([0, 0], [1, 1]) == 2
+    assert countStudents([0, 0], [0, 1]) == 1
+    assert countStudents([1, 1], [0, 1]) == 2
+    assert countStudents([1, 1], [1, 0]) == 1
+    assert countStudents([1, 1, 0, 0, 1, 1], [1, 1, 0, 0, 1, 1]) == 0
+    assert countStudents([0, 0, 1, 1, 0, 0], [1, 1, 0, 0, 1, 1]) == 2
+
+
+    print("All tests passed")
 
 if __name__ == "__main__":
-    args = argparse_list()
-    students = args.students
-    sandwiches = args.sandwiches
-    num_students_no_lunch = count_students(students=students, sandwiches=sandwiches)
-
-    # given students = [1, 1, 1, 0, 0, 1], sandwiches = [1, 0, 0, 0, 1, 1]
-    # you may get 3
-    print(num_students_no_lunch)
+    test_countStudents()
