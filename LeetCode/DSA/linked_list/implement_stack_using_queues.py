@@ -5,24 +5,19 @@ class MyStack:
 
     def __init__(self) -> None:
         self.q = deque([])
-    
-    def _rotate(self) -> None:
-        for _ in range(len(self.q) - 1):
-            self.push(self.q.popleft())
+        self._top_num = None
 
     def push(self, x: int) -> None:
         self.q.append(x)
+        self._top_num = x
 
     def pop(self) -> int:
-        self._rotate()
+        for _ in range(len(self.q) - 1):
+            self.push(self.q.popleft())
         return self.q.popleft()
 
     def top(self) -> int:
-        self._rotate()
-        
-        top_num = self.q.popleft()
-        self.push(top_num)
-        return top_num
+        return self._top_num
 
     def empty(self) -> bool:
         return len(self.q) == 0
