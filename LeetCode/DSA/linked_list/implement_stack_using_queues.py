@@ -3,31 +3,55 @@ from collections import deque
 
 class MyStack:
 
-    def __init__(self):
-        self.queue = deque()
+    def __init__(self) -> None:
+        self.q = deque([])
+    
+    def _rotate(self) -> None:
+        for _ in range(len(self.q) - 1):
+            self.push(self.q.popleft())
 
     def push(self, x: int) -> None:
-        self.queue.append(x)
-        return None
+        self.q.append(x)
 
     def pop(self) -> int:
-        """
-        if wanna pop element from stack (LIFO),
-        can't just remove the most right element from queue,
-        cuz queue is FIFO, so need to reverse the order of queue
-        (pop the most left element, then add it into the most right position)
-        """
-        
-        for _ in range(len(self.queue) - 1):
-            # self.queue.append(self.queue.popleft())
-            
-            # note that "self.queue.append" has been implemented as "self.push" method
-            self.push(self.queue.popleft())
-        
-        return self.queue.popleft()
-            
+        self._rotate()
+        return self.q.popleft()
+
     def top(self) -> int:
-        return self.queue[-1]
+        self._rotate()
+        
+        top_num = self.q.popleft()
+        self.push(top_num)
+        return top_num
 
     def empty(self) -> bool:
-        return len(self.queue) == 0
+        return len(self.q) == 0
+
+
+def test_my_stack():
+    # LeetCode Example 1
+    obj = MyStack()
+    obj.push(1)
+    obj.push(2)
+    assert obj.top() == 2
+    assert obj.pop() == 2
+    assert obj.empty() == False
+
+    # Edge cases
+    obj = MyStack()
+    obj.push(-1)
+    assert obj.top() == -1
+    assert obj.pop() == -1
+    assert obj.empty() == True
+    obj.push(3)
+    obj.push(-2)
+    assert obj.top() == -2
+    assert obj.pop() == -2
+    assert obj.top() == 3
+    obj.push(-3)
+    assert obj.top() == -3
+
+    print("All tests passed")
+
+if __name__ == "__main__":
+    test_my_stack()
