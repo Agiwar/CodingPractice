@@ -8,30 +8,25 @@ class ListNode:
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         """
-        the definition that there's a cycle in a linked list is that the tail next pointer to pos,
-            there may be no node, so return False directly.
-
-        the main idea behind the code is store the seen node when traversing,
-            if tail.next node appears in seen nodes, return True
+        using two pointers, slow and fast, both starting at head.
+            slow moves one step, fast moves two steps per iteration.
+            if there's a cycle, fast will eventually catch up to slow.
+            if no cycle, fast reaches None and the loop exits.
+            only fast and fast.next need to be checked in the while condition,
+            because fast always reaches the end before slow.
 
         time = O(n), n is head.length
-        space = O(n)
+        space = O(1)
         """
-
         
-        if not head:
-            return False
-        
-        curr = head
-        seen = set()
-        
-        while curr:
-            if curr in seen:
-                return True
+        slow, fast = head, head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
             
-            seen.add(curr)
-            curr = curr.next
-        
+            if fast == slow:
+                return True
+
         return False
 
 
