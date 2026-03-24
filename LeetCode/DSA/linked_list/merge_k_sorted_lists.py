@@ -52,10 +52,9 @@ class Solution:
         while (k := len(lists)) > 1:
             merged = []
             for i in range(0, k, 2):
-                if i == k - 1:
-                    merged.append(lists[i])
-                    break
-                merged.append(mergeTwoLists(lists[i], lists[i + 1]))
+                l1 = lists[i]
+                l2 = lists[i + 1] if (i + 1) < k else None
+                merged.append(mergeTwoLists(l1, l2))
             lists = merged
 
         return lists[0] if lists else None
