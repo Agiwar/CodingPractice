@@ -1,44 +1,62 @@
-from typing import Optional
-
+from typing import Optional, List
 
 class ListNode:
-    
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
-
-class Solution1:
-    # time = O(n), space = O(n)
+class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        if not head or head.next is None:
+        """
+        the definition that there's a cycle in a linked list is that the tail next pointer to pos,
+            there may be no node, so return False directly.
+
+        the main idea behind the code is store the seen node when traversing,
+            if tail.next node appears in seen nodes, return True
+
+        time = O(n), n is head.length
+        space = O(n)
+        """
+
+        
+        if not head:
             return False
         
-        list_node_visited = set()
         curr = head
+        seen = set()
         
         while curr:
-            if curr in list_node_visited:
+            if curr in seen:
                 return True
             
-            list_node_visited.add(curr)
+            seen.add(curr)
             curr = curr.next
-    
+        
         return False
 
 
-class Solution2:
-    # time = O(n), space = O(1)
-    def hasCycle(self, head: Optional[ListNode]) -> bool:
-        if not head or head.next is None:
-            return False
-        
-        slow, fast = head, head
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-            
-            if fast == slow:
-                return True
-        
-        return False
+def build_cycle_list(vals, pos):
+    dummy = ListNode()
+    curr = dummy
+    nodes = []
+    for v in vals:
+        curr.next = ListNode(v)
+        curr = curr.next
+        nodes.append(curr)
+    if pos >= 0:
+        curr.next = nodes[pos]
+    return dummy.next
+
+hasCycle = Solution().hasCycle
+
+def test_hasCycle():
+    assert hasCycle(build_cycle_list([3,2,0,-4], 1)) == True
+    assert hasCycle(build_cycle_list([1,2], 0)) == True
+    assert hasCycle(build_cycle_list([1], -1)) == False
+
+    # Edge cases
+
+    print("All tests passed")
+
+if __name__ == "__main__":
+    test_hasCycle()
