@@ -1,62 +1,53 @@
-import argparse
-from typing import List
-
-
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("given_arr", type=int, nargs="+")
-    return parser.parse_args()
-
-
-def merge_sort(arr: List[int]) -> List[int]:
-    # check whether sub-array is individual or not
-    if len(arr) <= 1:
+class Solution:
+    def merge_sort(self, arr: list[int]) -> list[int]:
+        if (n := len(arr)) <= 1:
+            return arr
+        
+        m = n // 2
+        arr_l = arr[:m]
+        arr_r = arr[m:]
+        
+        self.merge_sort(arr_l)
+        self.merge_sort(arr_r)
+        
+        i = j = k = 0
+        while i < len(arr_l) and j < len(arr_r):
+            if arr_l[i] <= arr_r[j]:
+                arr[k] = arr_l[i]
+                i += 1
+            
+            else:
+                arr[k] = arr_r[j]
+                j += 1
+            
+            k += 1
+        
+        while i < len(arr_l):
+            arr[k] = arr_l[i]
+            i += 1
+            k += 1
+        
+        while j < len(arr_r):
+            arr[k] = arr_r[j]
+            j += 1
+            k += 1
+        
         return arr
 
-    # find out the middle point of array to copy left & right sub-array
-    m = len(arr) // 2
+merge_sort = Solution().merge_sort
 
-    left_half = arr[:m]
-    right_half = arr[m:]
+def test_merge_sort():
+    # Basic cases
+    assert merge_sort([2, 3, 4, 1, 6]) == [1, 2, 3, 4, 6]
+    assert merge_sort([5, 4, 3, 2, 1]) == [1, 2, 3, 4, 5]
+    assert merge_sort([1, 2, 3, 4, 5]) == [1, 2, 3, 4, 5]
 
-    # recursion for left & right half sub-array until getting individual
-    merge_sort(left_half)
-    merge_sort(right_half)
+    # Edge cases
+    assert merge_sort([1]) == [1]
+    assert merge_sort([2, 1]) == [1, 2]
+    assert merge_sort([3, 3, 1, 1, 2]) == [1, 1, 2, 3, 3]
 
-    # three pointers:
-    # i: left half
-    # j: right half
-    # k: the entire array
-    i = j = k = 0
-
-    # put the smaller value from either left_half or right_halt into arr
-    while i < len(left_half) and j < len(right_half):
-        if left_half[i] <= right_half[j]:
-            arr[k] = left_half[i]
-            i += 1
-        else:
-            arr[k] = right_half[j]
-            j += 1
-        k += 1
-
-    # check whether there's left_half left
-    while i < len(left_half):
-        arr[k] = left_half[i]
-        i += 1
-        k += 1
-
-    # check whether there's right_half left
-    while j < len(right_half):
-        arr[k] = right_half[j]
-        j += 1
-        k += 1
-
-    return arr
-
+    print("All tests passed")
 
 if __name__ == "__main__":
-    args = argparse_list()
-    arr = args.given_arr
-
-    arr_sort = merge_sort(arr)
-    print(arr_sort)
+    test_merge_sort()
