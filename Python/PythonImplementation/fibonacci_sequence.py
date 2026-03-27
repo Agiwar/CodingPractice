@@ -1,44 +1,31 @@
-import argparse
-
-
-# Fibonacci sequence is a sequence that the n-th number is coming from (n-th - 1) + (n-th - 2)
-# And it's starting from F(0) = 0, F(1) = 1
-
-
-def argparse_integer() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-n", "--int", type=int)
-    return parser.parse_args()
-
-
-def fibonacci_recursive(n: int) -> int:
-    if n < 0:
-        raise ValueError("Incorrect input.")
-    elif n <= 1:
-        return n
-    else:
-        return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
+class Solution:
+    """
+    using recursion to solve it, break the original problem into smaller one,
+    cuz each fib-value is determined by the previous two,
+    so this is two-branch decision tree recursion,
+    the base case is the zeroth fib is zero and first one is one, respectively
     
+    time = O(2^n)
+    space = O(n)
+    """
+    
+    def fibonacci(self, n: int) -> int:
+        return n if n <= 1 else self.fibonacci(n - 1) + self.fibonacci(n - 2)
 
-def fibonacci_iterative(n: int) -> int:
-    if n < 0:
-        raise ValueError("Incorrect input.")
-    
-    if n == 0:
-        return n
-    
-    a, b = 0, 1
-    for _ in range(1, n):
-        a, b = b, (a + b)
-    
-    return b
+fibonacci = Solution().fibonacci
 
+def test_fibonacci():
+    # Basic cases
+    assert fibonacci(0) == 0
+    assert fibonacci(1) == 1
+    assert fibonacci(5) == 5
+    assert fibonacci(10) == 55
+
+    # Edge cases
+    assert fibonacci(2) == 1
+    assert fibonacci(3) == 2
+
+    print("All tests passed")
 
 if __name__ == "__main__":
-    args = argparse_integer()
-    n = args.int
-    n_th_fibonacci_rec = fibonacci_recursive(n)
-    n_th_fibonacci_itr = fibonacci_iterative(n)
-
-    # given n = 5, you may get 5; n = 10, get 55
-    print(f"{n_th_fibonacci_rec} = {n_th_fibonacci_itr}")
+    test_fibonacci()
