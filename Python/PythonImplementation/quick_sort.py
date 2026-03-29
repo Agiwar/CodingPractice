@@ -2,22 +2,21 @@ class Solution:
     def quick_sort(self, arr: list[int]) -> list[int]:
         if len(arr) <= 1:
             return arr
-
+        
         pivot = arr[-1]
         w_pt = 0
-
+        
         for r_pt in range(len(arr) - 1):
             if arr[r_pt] < pivot:
                 arr[w_pt], arr[r_pt] = arr[r_pt], arr[w_pt]
                 w_pt += 1
-
-        arr[-1] = arr[w_pt]
-        arr[w_pt] = pivot
-
-        left = self.quick_sort(arr[:w_pt])
-        right = self.quick_sort(arr[w_pt + 1:])
-
-        return left + [pivot] + right
+        
+        arr[-1], arr[w_pt] = arr[w_pt], pivot
+        
+        arr_l = self.quick_sort(arr[:w_pt])
+        arr_r = self.quick_sort(arr[w_pt + 1:])
+        
+        return arr_l + [pivot] + arr_r
 
 quick_sort = Solution().quick_sort
 
