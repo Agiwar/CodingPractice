@@ -1,41 +1,39 @@
-import argparse
-from typing import List
+class Solution:
+    def binary_search(self, arr: list[int], target: int) -> int:
+        l_pt, r_pt = 0, len(arr) - 1
+        
+        while l_pt <= r_pt:
+            m_pt = (r_pt - l_pt) // 2 + l_pt
+            
+            if arr[m_pt] > target:
+                r_pt = m_pt - 1
+            
+            elif arr[m_pt] < target:
+                l_pt = m_pt + 1
+            
+            else:
+                return m_pt
+        
+        return -1
 
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-arr", "--sorted_arr", type=int, nargs="+")
-    parser.add_argument("-t", "--target", type=int)
-    return parser.parse_args()
+binary_search = Solution().binary_search
 
+def test_binary_search():
+    # Basic cases
+    assert binary_search([1, 2, 3, 4, 5, 6], 4) == 3
+    assert binary_search([1, 2, 3, 4, 5, 6], 1) == 0
+    assert binary_search([1, 2, 3, 4, 5, 6], 6) == 5
 
-def binary_search(arr: List[int], target: int) -> int:
-    # define two pointers L & R which are the leftmost & rightmost pointer of input sorted array
-    L = 0
-    R = len(arr) - 1
+    # Not found
+    assert binary_search([1, 2, 3, 4, 5, 6], 7) == -1
+    assert binary_search([1, 2, 3, 4, 5, 6], 0) == -1
 
-    # execute binary search to find out the index of target value
-    while L <= R:
-        # find out the middle pointer
-        # m = (L + R) // 2
-    
-        # this is better formula to avoid integer overflow when L & R are both very large integer
-        m = L + (R - L) // 2
+    # Edge cases
+    assert binary_search([1], 1) == 0
+    assert binary_search([1], 2) == -1
 
-        if arr[m] < target:
-            L = m + 1
-        elif arr[m] > target:
-            R = m - 1
-        else:
-            return m
-
-    return -1    
-
+    print("All tests passed")
 
 if __name__ == "__main__":
-    args = argparse_list()
-    arr = args.sorted_arr
-    t = args.target
-
-    target_index = binary_search(arr=arr, target=t)
-    print(target_index)
+    test_binary_search()
