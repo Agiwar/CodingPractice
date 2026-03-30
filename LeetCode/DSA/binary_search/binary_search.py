@@ -1,43 +1,52 @@
-import argparse
-from typing import List
+class Solution:
+    def search(self, nums: list[int], target: int) -> int:
+        """
+        the input nums is a sorted ascending array, and each num in nums is unique
+            define l_pt, r_pt, and the m_pt is the middle position of nums,
+            compare m_pt's value with target until find out the solution
+        
+        time = O(log n), n is nums.length
+        space = O(1)
+        """
+        
+        l_pt, r_pt = 0, len(nums) - 1
+        
+        while l_pt <= r_pt:
+            m_pt = (r_pt - l_pt) // 2 + l_pt
+            
+            if nums[m_pt] > target:
+                r_pt = m_pt - 1
+            
+            elif nums[m_pt] < target:
+                l_pt = m_pt + 1
+            
+            else:
+                return m_pt
+        
+        return -1
 
 
-def argparse_list() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-arr", "--sorted_arr", type=int, nargs="+")
-    parser.add_argument("-t", "--target", type=int)
-    return parser.parse_args()
+
+search = Solution().search
+
+def test_search():
+    # LeetCode examples
+    assert search([-1, 0, 3, 5, 9, 12], 9) == 4
+    assert search([-1, 0, 3, 5, 9, 12], 2) == -1
+
+    # Edge cases
+    assert search([3], 2) == -1
+    assert search([-1], 0) == -1
+    assert search([-1, 0, 1], 0) == 1
+    assert search([-4, -3, -2, -1], 0) == -1
+    assert search([-4, -3, -2, -1], -4) == 0
+    assert search([-4, -3, -2, -1], -1) == 3
+    assert search([-4, -3, -2, -1], -3) == 1
+    assert search([2, 4, 6, 7], 1) == -1
+    assert search([2, 4, 6, 7], 6) == 2
 
 
-def binary_search(arr: List[int], target: int) -> int:
-    # define two pointers L & R which are the leftmost & rightmost pointer of input sorted array
-    L = 0
-    R = len(arr) - 1
-
-    # execute binary search to find out the index of target value
-    # condition L == R means this value is the last value we need to check
-    # also, consider the edge case: nums = [5], target = 5, output should be 0
-    while L <= R:
-        # find out the middle pointer
-        # m = (L + R) // 2
-    
-        # this is better formula to avoid integer overflow when L & R are both very large integer
-        m = L + (R - L) // 2
-
-        if arr[m] < target:
-            L = m + 1
-        elif arr[m] > target:
-            R = m - 1
-        else:
-            return m
-
-    return -1    
-
+    print("All tests passed")
 
 if __name__ == "__main__":
-    args = argparse_list()
-    arr = args.sorted_arr
-    t = args.target
-
-    target_index = binary_search(arr=arr, target=t)
-    print(target_index)
+    test_search()
