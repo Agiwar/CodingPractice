@@ -24,7 +24,8 @@ class Solution:
         
         while one <= two:
             k = (two - one) // 2 + one
-            r, c = k // n, k % n
+            r, c = divmod(k, n)
+            # r, c = k // n, k % n
             
             if matrix[r][c] > target:
                 two = k - 1
