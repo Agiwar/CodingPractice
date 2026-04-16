@@ -1,76 +1,62 @@
-class Solution1:
+class Solution:
+    def _get_palindrome(self, s: str, l_pt: int, r_pt: int) -> str:
+        while l_pt >= 0 and r_pt < len(s) and s[l_pt] == s[r_pt]:            
+            l_pt -= 1
+            r_pt += 1
+        
+        return s[(l_pt + 1):r_pt]
+    
+    
     def longestPalindrome(self, s: str) -> str:
-        if len(s) == 1:
-            return s
+        """
+        to determine a string is palindrome string or not,
+            when traversing the string s, define the current char as center,
+            and expand left and right respectively,
+            to check continue traversing char is keeping the same char,
+            so define two pointers to represent the expanding pointer from center,
+            the boundary of stopping expanding is when these two are out of index,
+            there're two cases, one is if the length of substring is odd, the other is even,
+            if odd, the two pointers start at the same point which is center,
+            if even, left and right are next to each other not at the same center,
+            so both of them needed to be compared,
+            do determine the length of palindrome is based on substring not input s
+
+        time = O(n^2), n is s.length
+        space = O(m), m is longestPalindromeSubstring.length, worst case is m = n
+        """
         
-        res = ""
-        res_len = 0
-
-        for i in range(len(s)):
-            # odd length: expand out from a center
-            L, R = i, i
-
-            # when pointers are inbound, and char are the same (cuz need to be palindromic string)
-            while L >= 0 and R < len(s) and s[L] == s[R]:
-
-                # check this sub string length
-                if (R - L + 1) > res_len:
-                    res = s[L:R+1]
-                    res_len = R - L + 1
-                
-                L -= 1
-                R += 1
+        n = len(s)
+        max_palindrome = s[0]
+        
+        for idx in range(n):
+            odd_palindrome = self._get_palindrome(s, idx, idx)
+            even_palindrome = self._get_palindrome(s, idx, idx + 1)
             
-            # even length: same code with odd length part, just control the pointer
-            L, R = i, i + 1
-            while L >= 0 and R < len(s) and s[L] == s[R]:
-                if (R - L + 1) > res_len:
-                    res = s[L:R+1]
-                    res_len = R - L + 1
-                
-                L -= 1
-                R += 1
-
-        return res
-
-
-class Solution2:
-    def find_out_longest_palindromic_substring(
-        self,
-        s: str,
-        left_pointer: int,
-        right_pointer: int
-    ) -> str:
-        sub_string = ""
-        max_sub_string_length = 0
-        
-        while (
-            left_pointer >= 0 and 
-            right_pointer < len(s) and
-            s[left_pointer] == s[right_pointer]
-        ):
-            if (right_pointer - left_pointer + 1) >  max_sub_string_length:
-                sub_string = s[left_pointer:(right_pointer + 1)]
-                max_sub_string_length = len(sub_string)
-            
-            left_pointer -= 1
-            right_pointer += 1
-        
-        return sub_string
-
-    def longestPalindrome(self, s: str) -> str:
-        if len(s) == 1:
-            return s
-
-        max_palindromic = ""
-        for idx in range(len(s)):
-            odd_palindromic = self.find_out_longest_palindromic_substring(s, idx, idx)
-            even_palindromic = self.find_out_longest_palindromic_substring(s, idx, idx + 1)
-            max_palindromic = max(
-                max_palindromic,
-                odd_palindromic,
-                even_palindromic,
-                key=len
+            max_palindrome = max(
+                max_palindrome,
+                odd_palindrome,
+                even_palindrome,
+                key=len,
             )
         
-        return max_palindromic
+        return max_palindrome
+
+
+longestPalindrome = Solution().longestPalindrome
+
+def test_longestPalindrome():
+    assert longestPalindrome("babad") in ["bab", "aba"]
+    assert longestPalindrome("cbbd") == "bb"
+
+    # Edge cases
+
+    print("All tests passed")
+    assert longestPalindrome("0") == "0"
+    assert longestPalindrome("101") == "101"
+    assert longestPalindrome("ba1aB") == "a1a"
+    assert longestPalindrome("Google") == "oo"
+    assert longestPalindrome("aabba") == "abba"
+
+
+if __name__ == "__main__":
+    test_longestPalindrome()
