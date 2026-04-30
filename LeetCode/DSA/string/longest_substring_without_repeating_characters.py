@@ -14,9 +14,6 @@ class Solution:
         space = O(m), m is longestsubstring.length
         """
         
-        if len(s) <= 1:
-            return len(s)
-        
         seen = {}
         pt = 0
         max_len = 0
