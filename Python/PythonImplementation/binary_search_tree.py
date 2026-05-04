@@ -1,111 +1,143 @@
-import argparse
-from typing import Optional
-
-
 class TreeNode:
-
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val: int = 0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
 
-def binary_search_tree_recursion(root: Optional[TreeNode], target: int) -> bool:
+# ============ Search ============
+
+def search(root: TreeNode | None, target: int) -> bool:
     """
-    Check whether target value exists in the BST or not.
+    Check whether target value exists in the BST.
+    
+    time: O(log n) balanced, O(n) worst
+    space: O(h) recursion stack
     """
     if not root:
         return False
     
     if target > root.val:
-        return binary_search_tree_recursion(root.right, target)
+        return search(root.right, target)
     elif target < root.val:
-        return binary_search_tree_recursion(root.left, target)
+        return search(root.left, target)
     else:
         return True
 
 
-def binary_search_tree_iteration(root: Optional[TreeNode], target: int) -> bool:
-    if not root:
-        return False
+def search_iter(root: TreeNode | None, target: int) -> bool:
+    """
+    Iterative search — preferred when stack space matters.
     
+    time: O(log n) balanced, O(n) worst
+    space: O(1)
+    """
     while root:
-        if target < root.val:
-            root = root.left
-        elif target > root.val:
-            root = root.right
-        else:
+        if root.val == target:
             return True
+        root = root.left if target < root.val else root.right
     
     return False
 
 
-def insert_recursion(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+# ============ Insert ============
+
+def insert(root: TreeNode | None, val: int) -> TreeNode:
     """
-    Insert a new node into the BST.
-    """
-    if not root:
-        return TreeNode(val=val)
+    Insert a new node into the BST. Returns the root.
+    Duplicates are ignored.
     
-    if val > root.val:
-        root.right = insert_recursion(root.right, val)
-    elif val < root.val:
-        root.left = insert_recursion(root.left, val)
-
-    return root
-
-
-def insert_iteration(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    time: O(log n) balanced, O(n) worst
+    space: O(h) recursion stack
+    """
     if not root:
         return TreeNode(val)
     
+    if val > root.val:
+        root.right = insert(root.right, val)
+    elif val < root.val:
+        root.left = insert(root.left, val)
+    # val == root.val: duplicate, do nothing
+    
+    return root
+
+
+def insert_iter(root: TreeNode | None, val: int) -> TreeNode:
+    """
+    Iterative insert — preferred when stack space matters.
+    
+    time: O(log n) balanced, O(n) worst
+    space: O(1)
+    """
+    new_node = TreeNode(val)
+    
+    if not root:
+        return new_node
+    
     curr = root
-    while curr:
+    while True:
         if val < curr.val:
             if not curr.left:
-                curr.left = TreeNode(val)
+                curr.left = new_node
                 break
             curr = curr.left
         elif val > curr.val:
             if not curr.right:
-                curr.right = TreeNode(val)
+                curr.right = new_node
                 break
             curr = curr.right
+        else:
+            # duplicate, do nothing
+            break
     
     return root
 
-def find_min_node(root: Optional[TreeNode]) -> Optional[TreeNode]:
-    """
-    Find a min-value node in the BST, the min value is always in the left sub-tree
-    """
-    curr = root
 
-    while curr and curr.left:
-        curr = curr.left
+# ============ Remove ============
+
+def find_min(root: TreeNode) -> TreeNode:
+    """
+    Find the minimum node in a subtree.
+    The min is always the leftmost node.
     
-    return curr
-
-
-def remove(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    time: O(h)
+    space: O(1)
     """
-    Remove a specific node from a existing BST
+    while root.left:
+        root = root.left
+    return root
+
+
+def remove(root: TreeNode | None, val: int) -> TreeNode | None:
+    """
+    Remove a node with given value from the BST. Returns the root.
+    
+    Three cases when node is found:
+        1. Leaf node: just remove
+        2. One child: replace with child
+        3. Two children: replace with inorder successor (min of right subtree)
+    
+    time: O(log n) balanced, O(n) worst
+    space: O(h) recursion stack
     """
     if not root:
         return None
 
+    # Search phase
     if val > root.val:
         root.right = remove(root.right, val)
     elif val < root.val:
         root.left = remove(root.left, val)
-        
-    # target found, and check the current node is leaf or not
-    elif not root.left:
-        return root.right
-    elif not root.right:
-        return root.left
     else:
-        min_value_node = find_min_node(root.right)
-        root.val = min_value_node.val
-        root.right = remove(root.right, min_value_node.val)
+        # Found — handle removal
+        if not root.left:
+            return root.right
+        if not root.right:
+            return root.left
+        
+        # Two children: replace with inorder successor
+        successor = find_min(root.right)
+        root.val = successor.val
+        root.right = remove(root.right, successor.val)
 
     return root
