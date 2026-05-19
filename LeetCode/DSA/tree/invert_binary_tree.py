@@ -19,7 +19,7 @@ class Solution:
             and what traversal doesn't matter either,
 
         so using DFS recursion swapping root's left and root's right,
-            pre-node works take O(1) time, and visit n nodes, so O(n) time
+            per-node works take O(1) time, and visit n nodes, so O(n) time
 
         time = O(n), n is number of nodes
         space = O(h) for recursion call, worst case is O(n) for skewed tree
