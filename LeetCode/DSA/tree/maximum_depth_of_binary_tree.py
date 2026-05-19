@@ -11,7 +11,7 @@ class Solution:
         find a tree's maximum depth, using DFS to recursively function call,
             to get the tree's depth, apply bottom-up approach to aggregate the depth results
             go for postorder traversal to determine the each single's way's depth,
-            and pre-node works O(1) time, needed to visit n nodes, so O(n) time,
+            and per-node works O(1) time, needed to visit n nodes, so O(n) time,
             as space, O(h) typically, worst case is O(n) for skewed tree
 
         time = O(n), n is total number of nodes
