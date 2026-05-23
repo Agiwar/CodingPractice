@@ -39,6 +39,7 @@ class Solution:
 
         time = O(n * m), n is total number of nodes in root, m is total number of nodes in subRoot
         space = O(h), h is tree height, typically h = log n, h = n for skewed tree
+                O(h_root) + O(h_subRoot)
         """
         
         if not root:
