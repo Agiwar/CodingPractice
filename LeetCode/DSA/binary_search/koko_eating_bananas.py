@@ -24,22 +24,22 @@ class Solution:
         
         time = O(log(max(n)) * n), n is piles.length
         space = O(1)
-        """        
+        """
         
-        n, m = 1, max(piles)
-        min_k = m
+        min_k = 1
+        max_k = max(piles)
         
-        while n <= m:
-            k = (m - n) // 2 + n
-            total_hours = sum((pile // k) for pile in piles)
-            total_hours += sum(bool(pile % k) for pile in piles)
+        while min_k <= max_k:
+            guess_k = (max_k - min_k) // 2 + min_k
             
-            if total_hours <= h:  # eat may too fast, continue searching smallest one
-                min_k = k
-                m = k - 1
+            hours = sum(pile // guess_k for pile in piles)
+            hours += sum(bool(pile % guess_k) for pile in piles)
             
-            else:  # eat too slow
-                n = k + 1
+            if hours <= h:
+                max_k = guess_k - 1
+            
+            else:
+                min_k = guess_k + 1
         
         return min_k
 
