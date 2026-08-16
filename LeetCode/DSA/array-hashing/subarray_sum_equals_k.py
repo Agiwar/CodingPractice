@@ -1,7 +1,8 @@
-from typing import List
+from collections import defaultdict
+
 
 class Solution:
-    def subarraySum(self, nums: List[int], k: int) -> int:
+    def subarraySum(self, nums: list[int], k: int) -> int:
         """
         The input array is not ordered and may contain negative numbers.
             When traversing the nums, calculate the current sum is equal to target k number,
@@ -28,17 +29,18 @@ class Solution:
         space = O(n)
         """
         
-        # nums = [1, 2, 3, -2, 2]，k = 5
         curr_sum = 0
+        pre_sums = defaultdict(int)
+        pre_sums[curr_sum] = 1
         ct = 0
         
-        prefix_sums = {0: 1}  # the first num has no prefix sum, has one zero-prefixSum
+
         for num in nums:
             curr_sum += num
             diff = curr_sum - k
             
-            ct += prefix_sums.get(diff, 0)
-            prefix_sums[curr_sum] = prefix_sums.get(curr_sum, 0) + 1
+            ct += pre_sums.get(diff, 0)
+            pre_sums[curr_sum] += 1
         
         return ct
 
