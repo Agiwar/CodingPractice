@@ -1,7 +1,5 @@
-from typing import List
-
 class Solution:
-    def productExceptSelf(self, nums: List[int]) -> List[int]:
+    def productExceptSelf(self, nums: list[int]) -> list[int]:
         """
         the number in nums may be negative, zero, positive number
             when traversing array, the current index value should be the product value of all numbers
@@ -22,19 +20,19 @@ class Solution:
         """
 
         n = len(nums)
-        res = [1] * n
+        products = [0] * n
 
-        L_product = 1
-        for L in range(n):
-            res[L] = L_product
-            L_product *= nums[L]
+        l_product = 1
+        for l_pt in range(n):
+            products[l_pt] = l_product
+            l_product *= nums[l_pt]
 
-        R_product = 1
-        for R in range(n - 1, -1, -1):
-            res[R] *= R_product
-            R_product *= nums[R]
+        r_product = 1
+        for r_pt in range(-1, -n - 1, -1):
+            products[r_pt] *= r_product
+            r_product *= nums[r_pt]
 
-        return res
+        return products
 
 
 productExceptSelf = Solution().productExceptSelf
