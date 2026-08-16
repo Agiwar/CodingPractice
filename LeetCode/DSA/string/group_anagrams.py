@@ -1,21 +1,19 @@
-from typing import List
+from collections import defaultdict
 
 class Solution:
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+    def groupAnagrams(self, strs: list[str]) -> list[List[str]]:
         """
         time = O(n * k * log k), k is max length of each word
         space = O(n * k), store n words, each word has maximum length of k
         """
         
-        from collections import defaultdict
-        
-        str_occurs = defaultdict(list)
+        anagrams = defaultdict(list)
 
         for word in strs:
             group = "".join(sorted(word))
-            str_occurs[group].append(word)
+            anagrams[group].append(word)
         
-        return list(str_occurs.values())
+        return list(anagrams.values())
 
 groupAnagrams = Solution().groupAnagrams
 
