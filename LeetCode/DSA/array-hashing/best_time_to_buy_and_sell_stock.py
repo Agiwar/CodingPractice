@@ -1,7 +1,5 @@
-from typing import List
-
 class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
+    def maxProfit(self, prices: list[int]) -> int:
         """
         The max profit from investing stock is buy in with low price, sell out with high price
 
@@ -18,18 +16,15 @@ class Solution:
         space = O(1)
         """
 
-        n = len(prices)
-        if n == 1:
-            return 0
-        
         buy = prices[0]
         max_profit = 0
-
-        for sell_day in range(1, n):
-            if (sell := prices[sell_day]) < buy:
+        
+        for sell in prices[1:]:
+            if sell < buy:
                 buy = sell
             
             max_profit = max(max_profit, sell - buy)
+
         return max_profit
         
 
