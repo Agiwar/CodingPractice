@@ -1,7 +1,5 @@
-from typing import List
-
 class Solution:
-    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+    def merge(self, nums1: list[int], m: int, nums2: list[int], n: int) -> None:
         """
         m or n may be zero, but m + n must be greater or equal to 1,
             number in array may have negative or zero
