@@ -4,14 +4,18 @@ class Solution:
         using binary search the min number from nums,
             if middle pointer's number > right pointer's number,
             then the min number must be in right halve side,
+            so left pointer = middle pointer + 1
             if middle pointer's number < right pointer's number,
-            then the min number must be in left halve side
+            then the min number must be in left halve side,
+            so right pointer = middle pointer, note that this middle pointer's value may be minimum
 
         time = O(log n), n is nums.length
         space = O(1)
         """
         
-        l_pt, r_pt = 0, len(nums) - 1
+        l_pt = 0
+        r_pt = len(nums) - 1
+        
         while l_pt < r_pt:
             m_pt = (r_pt - l_pt) // 2 + l_pt
             
@@ -22,7 +26,6 @@ class Solution:
                 r_pt = m_pt
         
         return nums[l_pt]
-
 
 
 
