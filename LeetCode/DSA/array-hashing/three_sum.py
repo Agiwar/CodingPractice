@@ -3,54 +3,60 @@ from typing import List
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         """
-        the nums.length must have length of 3, but there may be no answer for requirement,
-            the output's order doesn't matter, and outputs must be distinct,
-            but num with different index can be used multiple times
+        to find out all 3sums, sorted is required, then traverse the array nums,
+            based on the traversal pointer idx to define the two pointers l_pt and r_pt
+            to track the current summation is zero or not
+            define l_pt is greater than idx by 1, and r_pt is the last index of nums
 
-        at first, sort the input nums, and use two pointer to track the current summation is zero or not
-            define left pointer is greater than idx by 1, where idx is the index when traversing nums,
-            and right pointer is from the nums' end index
-
-        cuz nums is sorted, if current summation is greater than zero, move right pointer by -1,
-            if less than, move left pointer by 1, else it's the potential membership
-            add this membership to result array if this membership hasn't been seen
+        after sorting nums, there're some situations:
+            1. if first number is larger than zero which mustn't have 3sum = 0
+                so terminate the loop immediately.
+            2. each 3sum combination must be unique, when traversing,
+                skip the current number if current number is equal to previous number
+            3. otherwise, collecting all 3sums by nums with idx, l_pt, r_pt, respectively,
+                if current 3sum is larger than zero, then decrease the r_pt,
+                if smaller than zero, we increase l_pt,
+                this makes sense to find out the all 3sum memberships
+            4. same logic, can't collect the duplicated, if the current l_pt is smaller than r_pt,
+                and the current number by l_pt is equal to previous number,
+                then directly move l_pt to next one until the unique number by l_pt.
 
         time = O(n^2)
         space = O(1)
         """
-
-        n = len(nums)
+        
         nums.sort()
-        res = []
-
-        for idx in range(n):
-            if idx > 0 and nums[idx] == nums[idx - 1]:
-                continue
-            
+        n = len(nums)
+        triplets = []
+        
+        for idx in range(n - 2):
             if nums[idx] > 0:
                 break
             
-            L, R = idx + 1, n - 1
+            if idx > 0 and nums[idx] == nums[idx - 1]:
+                continue
             
-            while L < R:
-                i, j, k = nums[idx], nums[L], nums[R]
+            l_pt = idx + 1
+            r_pt = n - 1
+            
+            while l_pt < r_pt:
+                sums = nums[idx] + nums[l_pt] + nums[r_pt]
                 
-                if i + j + k > 0:
-                    R -= 1
+                if sums > 0:
+                    r_pt -= 1
                 
-                elif i + j + k < 0:
-                    L +=1
+                elif sums < 0:
+                    l_pt += 1
                 
                 else:
-                    res.append([i, j, k])
+                    triplets.append([nums[idx], nums[l_pt], nums[r_pt]])
+                    l_pt += 1
+                    r_pt -= 1
                     
-                    L += 1
-                    R -= 1
-                    
-                    while L < R and nums[L] == nums[L - 1]:
-                        L += 1
+                    while l_pt < r_pt and nums[l_pt] == nums[l_pt - 1]:
+                        l_pt += 1
         
-        return res
+        return triplets
 
 
 threeSum = Solution().threeSum
