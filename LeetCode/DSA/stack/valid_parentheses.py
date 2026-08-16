@@ -1,6 +1,3 @@
-from typing import List
-
-
 class Solution:
     def isValid(self, s: str) -> bool:
         """
@@ -22,7 +19,7 @@ class Solution:
         space = O(n), create a brackets paired hashmap + a stack to store bracket from s
         """
 
-        if len(s) % 2 == 1:
+        if len(s) % 2:
             return False
         
         bracket_map = {
@@ -31,15 +28,15 @@ class Solution:
             "{": "}",
         }
 
-        unpaired_brackets = []
+        brackets = []
         for bracket in s:
             if bracket in bracket_map:
-                unpaired_brackets.append(bracket)
+                brackets.append(bracket)
             
-            elif not unpaired_brackets or bracket != bracket_map[unpaired_brackets.pop()]:
+            elif not brackets or bracket != bracket_map[brackets.pop()]:
                 return False
         
-        return not unpaired_brackets
+        return not brackets
 
 
 isValid = Solution().isValid
