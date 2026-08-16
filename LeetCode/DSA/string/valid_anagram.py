@@ -1,4 +1,5 @@
-from typing import List
+from collections import Counter
+
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
@@ -24,7 +25,6 @@ class Solution:
         space = O(k), k is number of unique char, Counter handles it gracefully
         """
 
-        from collections import Counter
         return Counter(s) == Counter(t)
 
 
