@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         """
@@ -22,26 +25,23 @@ class Solution:
         space = O(1), all keys are uppercase english chars which is 26
         """
         
-        from collections import defaultdict
-        
-        
-        char_occur = defaultdict(int)
         l_pt = 0
         max_len = 0
-        max_occur = 0
+        char_occur = defaultdict(int)
+        max_char_occur = 0
         
         for r_pt, char in enumerate(s):
             char_occur[char] += 1
-            max_occur = max(max_occur, char_occur[char])
+            max_char_occur = max(max_char_occur, char_occur[char])
             
-            while (window_size := r_pt - l_pt + 1) - max_occur > k:
+            while (window_len := r_pt - l_pt + 1) - max_char_occur > k:
                 char_occur[s[l_pt]] -= 1
                 l_pt += 1
             
-            max_len = max(max_len, window_size)
+            max_len = max(max_len, window_len)
         
         return max_len
-        
+
 
 characterReplacement = Solution().characterReplacement
 
