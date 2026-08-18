@@ -1,3 +1,6 @@
+from itertools import islice
+
+
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
         """
@@ -19,7 +22,7 @@ class Solution:
         buy = prices[0]
         max_profit = 0
         
-        for sell in prices[1:]:
+        for sell in islice(prices, 1, None):
             if sell < buy:
                 buy = sell
             
