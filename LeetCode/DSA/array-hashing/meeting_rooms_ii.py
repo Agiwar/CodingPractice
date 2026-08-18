@@ -18,9 +18,7 @@ class Solution:
         space = O(n)
         """
 
-        if (n := len(intervals)) == 1:
-            return 1
-
+        n = len(intervals)
         starts = sorted([interval[0] for interval in intervals])
         ends = sorted([interval[1] for interval in intervals])
 
