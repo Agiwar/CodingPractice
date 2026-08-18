@@ -15,7 +15,7 @@ class Solution:
             if conflict occurred, another meeting rooms required, depends on how many conflicts there are
 
         time = O(n * log n), n is intervals.length
-        space = O(1)
+        space = O(n)
         """
 
         if (n := len(intervals)) == 1:
@@ -52,9 +52,9 @@ class Solution:
         n = intervals.length which must be larger or equal to 1
         time: O(n * log n) where:
             sorting: O(n * log n)
-            build min-heap: O(n)
-            heap operations: O(log n)
-        
+            build min-heap by push/pop, occupied rooms is k, total is n, so O(n * log k)
+                cuz k <= n is guaranteed, so O(n * log n)
+            
         space: O(n), the worst case is all rooms are occupied
         """
         
