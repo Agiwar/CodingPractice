@@ -1,12 +1,5 @@
 class ListNode:
-    def __init__(
-        self,
-        key: int=0,
-        val: int=0,
-        prev=None,
-        next=None,
-    ) -> None:
-
+    def __init__(self, key: int=0, val: int=0, prev=None, next=None) -> None:
         self.key = key
         self.val = val
         self.prev = prev
@@ -51,58 +44,57 @@ class LRUCache:
     
     space = O(capacity)
     """
-
-    def __init__(self, capacity: int):
+    
+    def __init__(self, capacity: int) -> None:
         self.cap = capacity
         self.cache = {}
-        
         self.head = ListNode()
         self.tail = ListNode()
         
         self.head.next = self.tail
         self.tail.prev = self.head
     
-    def _remove(self, node: ListNode) -> None:
+    def _remove_node(self, node: ListNode) -> None:
         prev_node = node.prev
         next_node = node.next
         prev_node.next = next_node
         next_node.prev = prev_node
     
-    def _insert(self, node: ListNode) -> None:
+    def _insert_node(self, node: ListNode) -> None:
         prev_node = self.tail.prev
         next_node = self.tail
         prev_node.next = node
-        node.next = next_node
-        next_node.prev = node
+        node.next = self.tail
+        self.tail.prev = node
         node.prev = prev_node
-
+    
     def get(self, key: int) -> int:
         if key not in self.cache:
             return -1
         
         node = self.cache[key]
-        self._remove(node)
-        self._insert(node)
+        self._remove_node(node)
+        self._insert_node(node)
         
         return node.val
-
+    
     def put(self, key: int, value: int) -> None:
         if key in self.cache:
             node = self.cache[key]
             node.val = value
-            self._remove(node)
+            self._remove_node(node)
         
         else:
             node = ListNode(key, value)
             
             if len(self.cache) >= self.cap:
                 lru = self.head.next
-                self._remove(lru)
                 self.cache.pop(lru.key)
+                self._remove_node(lru)
             
             self.cache[key] = node
         
-        self._insert(node)
+        self._insert_node(node)
 
 
 def test_lru_cache():
