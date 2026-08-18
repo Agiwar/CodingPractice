@@ -89,8 +89,8 @@ class LRUCache:
             
             if len(self.cache) >= self.cap:
                 lru = self.head.next
-                self.cache.pop(lru.key)
                 self._remove_node(lru)
+                del self.cache[lru.key]
             
             self.cache[key] = node
         
