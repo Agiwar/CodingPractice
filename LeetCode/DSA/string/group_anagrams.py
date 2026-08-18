@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 class Solution:
-    def groupAnagrams(self, strs: list[str]) -> list[List[str]]:
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
         """
         time = O(n * k * log k), k is max length of each word
         space = O(n * k), store n words, each word has maximum length of k
