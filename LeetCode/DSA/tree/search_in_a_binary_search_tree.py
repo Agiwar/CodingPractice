@@ -15,17 +15,17 @@ class Solution:
         time = O(log n), n is total number of nodes in tree if tree is balanced, worst case is O(n)
         space = O(h) for recursion stack, h is the height of tree, worst case is O(n)
         """
-
         
         if not root:
             return None
         
-        if root.val < val:
-            return self.searchBST(root.right, val)
-        elif root.val > val:
-            return self.searchBST(root.left, val)
-        else:
+        elif root.val == val:
             return root
+        
+        return (
+            self.searchBST(root.left, val) if root.val > val
+            else self.searchBST(root.right, val)
+        )
     
     def iterSearchBST(self, root: TreeNode | None, val: int) -> TreeNode | None:
         """
@@ -38,13 +38,14 @@ class Solution:
         space = O(1), cuz no recursion operations
         """
         
-        while root:
-            if root.val == val:
-                return root
+        curr = root
+        while curr:
+            if curr.val == val:
+                return curr
             
-            root = root.left if root.val > val else root.right
+            curr = curr.left if curr.val > val else curr.right
         
-        return None
+        return curr
 
 
 searchBST = Solution().searchBST
