@@ -38,14 +38,13 @@ class Solution:
         space = O(1), cuz no recursion operations
         """
         
-        curr = root
-        while curr:
-            if curr.val == val:
-                return curr
+        while root:
+            if root.val == val:
+                return root
             
-            curr = curr.left if curr.val > val else curr.right
+            root = root.left if root.val > val else root.right
         
-        return curr
+        return root
 
 
 searchBST = Solution().searchBST
