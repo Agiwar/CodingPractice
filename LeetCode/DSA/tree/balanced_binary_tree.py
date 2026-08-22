@@ -6,17 +6,17 @@ class TreeNode:
 
 
 class Solution:
-    def _check_subtree_height(self, root: TreeNode | None) -> int:
+    def _subtree_height(self, node: TreeNode | None) -> int:
         """
-        check the height of the root's subtree which has left and right,
+        check the height of the node's subtree which has left and right,
             the number of left children may be different from rights',
-            so the root height is from the maximum height of left subtree or right's,
+            so the node height is from the maximum height of left subtree or right's,
             and then plus one
         
         the base case is when there's no node, height is zero, leaf node has height of one,
             postorder traverse the tree node, if one of the subtree is already imbalanced,
             then whole tree must be imbalanced, otherwise, needed to continue checking the others
-            also, imbalanced means the difference of root's left and right subtree heights is greater than one
+            also, imbalanced means the difference of node's left and right subtree heights is greater than one
 
         return -1 to tell the caller it's already imbalanced,
             it's safe because a real height is never negative
@@ -25,11 +25,11 @@ class Solution:
         space = O(h), h is height of tree due to recursion call stack
         """
 
-        if not root:
+        if not node:
             return 0
 
-        left_height = self._check_subtree_height(root.left)
-        right_height = self._check_subtree_height(root.right)
+        left_height = self._subtree_height(node.left)
+        right_height = self._subtree_height(node.right)
 
         if (
             left_height == -1 or
@@ -41,7 +41,7 @@ class Solution:
         return max(left_height, right_height) + 1
 
     def isBalanced(self, root: TreeNode | None) -> bool:
-        return self._check_subtree_height(root) != -1
+        return self._subtree_height(root) != -1
 
 
 isBalanced = Solution().isBalanced
