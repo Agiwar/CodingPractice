@@ -25,10 +25,10 @@ class Solution:
             node_val = next(preorder_iter)
             node = TreeNode(node_val)
             
-            root_idx = node_idx_inorder[node_val]
+            node_idx = node_idx_inorder[node_val]
             
-            node.left = build(left, root_idx - 1)
-            node.right = build(root_idx + 1, right)
+            node.left = build(left, node_idx - 1)
+            node.right = build(node_idx + 1, right)
             
             return node
         
