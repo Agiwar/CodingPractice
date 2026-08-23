@@ -18,8 +18,8 @@ class Solution:
         node_idx_inorder = {val: idx for idx, val in enumerate(inorder)}
         preorder_iter = iter(preorder)
         
-        def build(left: int, right: int) -> TreeNode | None:
-            if left > right:
+        def build(left_bound: int, right_bound: int) -> TreeNode | None:
+            if left_bound > right_bound:
                 return None
             
             node_val = next(preorder_iter)
@@ -27,8 +27,8 @@ class Solution:
             
             node_idx = node_idx_inorder[node_val]
             
-            node.left = build(left, node_idx - 1)
-            node.right = build(node_idx + 1, right)
+            node.left = build(left_bound, node_idx - 1)
+            node.right = build(node_idx + 1, right_bound)
             
             return node
         
