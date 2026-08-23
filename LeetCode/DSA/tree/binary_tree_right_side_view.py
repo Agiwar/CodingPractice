@@ -26,26 +26,26 @@ class Solution:
         space = O(w), worst case O(n)
         """
         
-        if not root:
-            return []
-        
-        queue = deque([root])
+        queue = deque([])
         result = []
         
-        while queue:
-            rightmost_val: int | None = None
+        if root:
+            queue.append(root)
+        
+        while (n := len(queue)) > 0:
+            last_seen_val: int | None = None
             
-            for _ in range(len(queue)):
-                curr = queue.popleft()
-                rightmost_val = curr.val
+            for _ in range(n):
+                curr_node = queue.popleft()
+                last_seen_val = curr_node.val
                 
-                if curr.left:
-                    queue.append(curr.left)
+                if curr_node.left:
+                    queue.append(curr_node.left)
                 
-                if curr.right:
-                    queue.append(curr.right)
+                if curr_node.right:
+                    queue.append(curr_node.right)
             
-            result.append(rightmost_val)
+            result.append(last_seen_val)
         
         return result
 
