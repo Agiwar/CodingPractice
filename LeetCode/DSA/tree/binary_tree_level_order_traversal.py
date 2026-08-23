@@ -28,31 +28,30 @@ class Solution:
     
             time = O(n), n is total number of nodes
             space = O(n) is the worst case, O(w) in average where w is the max width of a level
-            """
-
+        """
         
-        if not root:
-            return []
+        queue = deque([])
+        output = []
         
-        result = []
-        queue = deque([root])
+        if root:
+            queue.append(root)
         
-        while queue:
-            level = []
+        while (n := len(queue)) > 0:
+            layer_nodes = []
             
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                level.append(node.val)
+            for _ in range(n):
+                curr_node = queue.popleft()
+                layer_nodes.append(curr_node.val)
                 
-                if node.left:
-                    queue.append(node.left)
+                if curr_node.left:
+                    queue.append(curr_node.left)
                 
-                if node.right:
-                    queue.append(node.right)
+                if curr_node.right:
+                    queue.append(curr_node.right)
             
-            result.append(level)
+            output.append(layer_nodes)
         
-        return result
+        return output
 
 
 levelOrder = Solution().levelOrder
