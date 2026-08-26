@@ -8,20 +8,16 @@ class TreeNode:
 class Solution:
     def pathSum(self, root: TreeNode | None, targetSum: int) -> list[list[int]]:
         """
-        in a binary tree, there may be multiple paths (root to leaf)
-            that summation of these nodes' value is equal to target sum,
-            need to collect them all, if any,
-            note that the solution path is if and only if when reaching leaf node,
-            and the target sum is also consumed out to be zero exactly
-        
-        the base case is when there's no node, the DFS helper function returns nothing,
-            cuz this DFS helper function is doing internal list mutation, no return
-            also, if found the path has the target sum, need to copy it,
-            and then can be appended to output, otherwise, the list is mutable object,
-            the later backtracking pop will destroy the found solution path
-        
+        collect every root-to-leaf path whose values sum to targetSum
+        a path is a solution exactly when it ends at a leaf and remaining is zero
+
+        the DFS helper returns nothing: it mutates shared state,
+            base case is no node, just return
+            path is shared and mutated by backtracking, so each match is stored as a copy
+
         time = O(n + s * h), traversal is O(n), but copying a found path costs O(h),
                 n is total number of nodes, s is number of solution paths (at most number of leaves),
+                h is the height of the tree,
                 a full tree where every leaf matches gives O(n log n),
                 the true worst case is O(n^2): a chain ending in a bush, all zeros with target 0,
                 every solution path drags the whole chain with it
@@ -31,22 +27,22 @@ class Solution:
         """
         
         output: list[list[int]] = []
-        paths: list[int] = []
+        path: list[int] = []
         
         def collect_paths(node: TreeNode | None, remaining: int) -> None:
             if not node:
                 return
             
-            paths.append(node.val)
+            path.append(node.val)
             remaining -= node.val
             
             if not node.left and not node.right and remaining == 0:
-                output.append(paths.copy())
+                output.append(path.copy())
             
             collect_paths(node.left, remaining)
             collect_paths(node.right, remaining)
             
-            paths.pop()
+            path.pop()
         
         collect_paths(root, targetSum)
         return output
