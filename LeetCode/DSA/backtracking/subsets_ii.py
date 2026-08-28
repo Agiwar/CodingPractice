@@ -8,34 +8,44 @@ class Solution:
             e.g., [1, 2, 2] -> [1, 2]:
                 pick first 2 then skip second 2 is identical to
                 skip first 2 then pick the second 2
-        
+
+        the while loop: skipping is about the whole value, not just one index,
+            if not picking nums[idx], also not picking its equal neighbors,
+            cuz skip first 2 then pick second 2 just repeats what the pick branch already did,
+            so jump idx to the last duplicate before recursing the skip branch
+
         in order to keep subset are unique, using set to collect them,
             at the same time, transform subset (list type) to tuple type,
             cuz (1, 2) and (2, 1) are the same, so needed to maintain mutability and hashable,
             using tuple to carry all subset which is a list
         
-        time: O(n * 2^n) — sort is O(n log n); the recursion explores all 2^n
-            pick/skip paths, and each pick copies the current subset into a
-            tuple (O(n)) for hashing into the set
+        time: O(n * 2^n) worst case (all distinct — the skip prunes nothing);
+            sort is O(n log n), and each pick copies the current subset into a
+            tuple (O(n)) for hashing into the set. With duplicates the skip
+            prunes whole branches, so duplicate-heavy inputs explore far fewer
+            than 2^n paths (all-identical input: only n unique subsets)
         space: O(n * 2^n) — the set holds up to 2^n tuples of length up to n;
             auxiliary space is O(n) for the recursion stack and running subset
         """
         
         nums.sort()
+        n = len(nums)
         
         subsets = {()}
         subset = []
         
         def collect_uqe_subset(idx: int) -> None:
-            if idx == len(nums):
+            if idx == n:
                 return
             
             subset.append(nums[idx])
             subsets.add(tuple(subset))
             
             collect_uqe_subset(idx + 1)
+            while idx + 1 < n and nums[idx] == nums[idx + 1]:
+                idx += 1
+                
             subset.pop()
-            
             collect_uqe_subset(idx + 1)
         
         collect_uqe_subset(0)
