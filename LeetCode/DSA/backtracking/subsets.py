@@ -18,11 +18,13 @@ class Solution:
                 so O(n * 2^n) counting the output
         """
         
+        n = len(nums)
+        
         subsets = []
         subset = []
         
         def collect_subset(idx: int) -> None:
-            if idx >= len(nums):
+            if idx == n:
                 subsets.append(subset.copy())
                 return
             
