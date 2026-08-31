@@ -1,30 +1,59 @@
-from itertools import product
-
-
 class Solution:
     
     mappings = {
-        "2": ["a", "b", "c"],
-        "3": ["d", "e", "f"],
-        "4": ["g", "h", "i"],
-        "5": ["j", "k", "l"],
-        "6": ["m", "n", "o"],
-        "7": ["p", "q", "r", "s"],
-        "8": ["t", "u", "v"],
-        "9": ["w", "x", "y", "z"],
+        "2": "abc",
+        "3": "def",
+        "4": "ghi",
+        "5": "jkl",
+        "6": "mno",
+        "7": "pqrs",
+        "8": "tuv",
+        "9": "wxyz",
     }
     
     def letterCombinations(self, digits: str) -> list[str]:
         """
-        in this question, it's purpose is to collect all cartesian combinations,
-            so i just use python build-in module to finish
+        to get all cartesian product combinations,
+            create the digit to letter mappings in class level to avoid re-building it on every call,
+            and when traversing digits, each digit can reference its letters
+
+        the recursive part is move idx by one until idx hits len(digits),
+            combination is a shared buffer holding the letters chosen so far,
+            append picks a letter for position idx, and pop undoes that pick
+            so the next sibling letter starts from the same prefix
+
+        the criteria exit is when idx hits len(digits), which means the buffer holds
+            a full combination, so "".join freezes a snapshot into an immutable string
+
+        time: O(n * 4^n) in worst case, n is length of digits,
+                the depth is n, and each node branches into at most 4 letters (only 7 and 9),
+                so there are at most 4^n leaves,
+                and each leaf costs O(n) for the "".join,
+                so total time is O(n * 4^n)
+        space: O(n), the recursive call is O(n) where depth <= n,
+                and the auxiliary space is O(n) for the combination buffer,
+                so total is O(n), the output doesn't count
         """
         
         if not digits:
             return []
         
-        candidates = [self.mappings[digit] for digit in digits]
-        return ["".join(letter) for letter in product(*candidates)]
+        n = len(digits)
+        combinations = []
+        combination = []
+        
+        def collect_digit_to_letter(idx: int) -> None:
+            if idx == n:
+                combinations.append("".join(combination))
+                return
+            
+            for letter in self.mappings[digits[idx]]:
+                combination.append(letter)
+                collect_digit_to_letter(idx + 1)
+                combination.pop()
+        
+        collect_digit_to_letter(0)
+        return combinations
 
 
 letterCombinations = Solution().letterCombinations
