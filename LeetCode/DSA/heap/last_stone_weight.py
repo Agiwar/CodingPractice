@@ -26,13 +26,10 @@ class Solution:
                 so total is O(n)
         """
         
-        if len(stones) == 1:
-            return stones[0]
-        
         stones = [-s for s in stones]
         heapq.heapify(stones)
         
-        while len(stones) // 2:
+        while len(stones) > 1:
             y, x = (heapq.heappop(stones) for _ in range(2))
             
             if y != x:
