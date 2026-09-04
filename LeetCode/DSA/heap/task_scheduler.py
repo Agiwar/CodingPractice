@@ -4,43 +4,35 @@ from collections import Counter
 class Solution:
     def leastInterval(self, tasks: list[str], n: int) -> int:
         """
-        the busiest task sets the shape of the schedule.
-            it lays down (max_freq - 1) complete blocks, each 1 + n wide,
-            1 for the task itself and n for its cooldown,
-            then a final block holding every task tied at max_freq,
-            those need no cooldown after them because nothing follows
+        the main idea behind the code is count how many different tasks there are,
+            in these tasks' frequency, get the max frequency number (most common runs),
+            and count the total number of tasks with most common runs there are,
+            and each task occupies the (1 + n) time window, 1 means itself is included,
+            and calculate how many cooling time window there will be,
+            which is the total number of intervals among the most run tasks,
+            i.e., if the most common runs is 3, so there are 2 intervals
 
-        every other task is strictly less frequent, so it always fits into the idle
-            slots of that skeleton without ever needing two copies in one block.
-            if the fillers do not use up the idle slots, the skeleton is the answer.
-            if there are more tasks than slots, the surplus extends the schedule but
-            can never force a new idle, because anything that overflows is by
-            definition a task with room to spare, so the answer is just len(tasks).
-            the two cases are exactly max(skeleton_length, len(tasks)),
-            the floor is a case split, not a safety net
-
-        time: O(N), N is len(tasks),
-                one pass to count, then max and count over the distinct task types,
-                which the uppercase-letter constraint caps at 26, so those are O(1)
+        time: O(n), n is len(tasks), one pass to count them,
+                then max and count over the distinct tasks,
+                which is at most 26 because tasks are uppercase letters,
+                so that part is O(1) and the count pass dominates
         space: O(1), the counter holds at most 26 entries,
-                bounded by the alphabet rather than by how many tasks come in
-
-        note: this returns the schedule length only, not the schedule itself.
-            emitting the actual task order needs the greedy max heap simulation,
-            repeatedly take the (1 + n) most frequent available tasks,
-            decrement each, and requeue whatever still has runs left
+                bounded by the alphabet, not by how many tasks come in
         """
 
-        task_counts = list(Counter(tasks).values())
-        max_freq = max(task_counts)
-        num_tasks_at_max_freq = task_counts.count(max_freq)
+        each_task_ct = list(Counter(tasks).values())
+        most_common_runs = max(each_task_ct)
+        number_of_tasks_with_most_common_runs = each_task_ct.count(most_common_runs)
 
-        block_width = 1 + n
-        full_blocks = max_freq - 1
+        each_task_window = 1 + n
+        number_of_intervals_among_most_run_tasks = most_common_runs - 1
 
-        skeleton_length = full_blocks * block_width + num_tasks_at_max_freq
+        total_intervals = (
+            number_of_intervals_among_most_run_tasks * each_task_window +
+            number_of_tasks_with_most_common_runs
+        )
 
-        return max(skeleton_length, len(tasks))
+        return max(total_intervals, len(tasks))
 
 
 leastInterval = Solution().leastInterval
