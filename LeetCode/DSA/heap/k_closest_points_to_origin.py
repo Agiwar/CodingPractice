@@ -2,8 +2,9 @@ import heapq
 
 
 class Solution:
-    def _get_point_distance(self, point: list[int, int]) -> list[int, list[int, int]]:
-        return [sum(pt ** 2 for pt in point), point]
+    @staticmethod
+    def _point_origin_distance(x: int, y: int) -> int:
+        return sum((x ** 2, y ** 2))
     
     def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
         """
@@ -13,8 +14,8 @@ class Solution:
         to get the k points closest to the origin,
             just min heap pop k times
 
-        create a helper function to get distance between point and origin,
-            helper function returns the distance first, then the point coordinate,
+        create a helper function to get the distance between a point and the origin,
+            the list comprehension pairs each distance with its point as [distance, point],
             so the heap orders by distance
 
         time: O(n + k * log n), O(n) to build the distance list,
@@ -25,10 +26,10 @@ class Solution:
                 output doesn't count
         """
         
-        min_heap = [self._get_point_distance(point) for point in points]
-        heapq.heapify(min_heap)
+        distances = [[self._point_origin_distance(x, y), [x, y]] for x, y in points]
+        heapq.heapify(distances)
 
-        return [heapq.heappop(min_heap)[1] for _ in range(k)]
+        return [heapq.heappop(distances)[1] for _ in range(k)]
 
 
 kClosest = Solution().kClosest
