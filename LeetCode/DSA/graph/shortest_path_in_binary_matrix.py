@@ -9,11 +9,10 @@ class Solution:
     )
     
     def shortestPathBinaryMatrix(self, grid: list[list[int]]) -> int:
-        row = len(grid)
-        col = len(grid[0])
+        n = len(grid)
         
         sr, sc = 0, 0
-        er, ec = row - 1, col - 1
+        er, ec = n - 1, n - 1
         
         if grid[sr][sc] == 1 or grid[er][ec] == 1:
             return -1
