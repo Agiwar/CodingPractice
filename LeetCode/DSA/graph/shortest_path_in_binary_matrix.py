@@ -1,52 +1,86 @@
 from collections import deque
-from typing import List
 
 
 class Solution:
-    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
-        rows = len(grid)
-        cols = len(grid[0])
-
-        if grid[0][0] == 1 or grid[rows - 1][cols - 1] == 1:
+    
+    DIRS = (
+        (1, 0), (0, 1), (-1, 0), (0, -1),
+        (1, 1), (-1, 1), (1, -1), (-1, -1),
+    )
+    
+    def shortestPathBinaryMatrix(self, grid: list[list[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+        
+        sr, sc = 0, 0
+        er, ec = row - 1, col - 1
+        
+        if grid[sr][sc] == 1 or grid[er][ec] == 1:
             return -1
-
-        dirs = [
-            (1, 0),
-            (-1, 0),
-            (0, 1),
-            (0, -1),
-            (-1, -1),
-            (-1, 1),
-            (1, -1),
-            (1, 1),
-        ]
-
-        r, c = 0, 0
-        visit = {(r, c)}
-        queue = deque([(r, c)])
-
+        
+        visited_cell = {(sr, sc)}
+        queue = deque([(sr, sc)])
+        
         length = 1
         while queue:
             for _ in range(len(queue)):
                 r, c = queue.popleft()
-
-                if r == rows - 1 and c == cols - 1:
+                
+                if (r, c) == (er, ec):
                     return length
-
-                for dr, dc in dirs:
-                    nr, nc = r + dr, c + dc
-
+                
+                for dr, dc in self.DIRS:
+                    nr = r + dr
+                    nc = c + dc
+                    
                     if (
-                        nr not in range(rows) or
-                        nc not in range(cols) or
-                        grid[nr][nc] == 1 or
-                        (nr, nc) in visit
+                        not sr <= nr <= er
+                        or not sc <= nc <= ec
+                        or grid[nr][nc] != 0
+                        or (nr, nc) in visited_cell
                     ):
                         continue
-
-                    visit.add((nr, nc))
+                    
+                    visited_cell.add((nr, nc))
                     queue.append((nr, nc))
-
+            
             length += 1
-
+        
         return -1
+
+
+shortestPathBinaryMatrix = Solution().shortestPathBinaryMatrix
+
+def test_shortestPathBinaryMatrix():
+    # LeetCode Example 1
+    assert shortestPathBinaryMatrix([[0,1],[1,0]]) == 2
+
+    # LeetCode Example 2
+    assert shortestPathBinaryMatrix([[0,0,0],[1,1,0],[1,1,0]]) == 4
+
+    # LeetCode Example 3
+    assert shortestPathBinaryMatrix([[1,0,0],[1,1,0],[1,1,0]]) == -1
+
+    # Edge cases
+    # Minimum size, open -> start is also the end
+    assert shortestPathBinaryMatrix([[0]]) == 1
+
+    # Minimum size, blocked
+    assert shortestPathBinaryMatrix([[1]]) == -1
+
+    # End cell blocked
+    assert shortestPathBinaryMatrix([[0,0],[0,1]]) == -1
+
+    # Fully open grid -> pure diagonal walk
+    assert shortestPathBinaryMatrix([[0,0,0],[0,0,0],[0,0,0]]) == 3
+
+    # Forced detour through a single gap (greedy/diagonal-only fails here)
+    assert shortestPathBinaryMatrix([[0,1,0],[0,1,0],[0,0,0]]) == 4
+
+    # Longer detour: row of walls with one opening
+    assert shortestPathBinaryMatrix([[0,0,0,0],[1,1,1,0],[0,0,0,0],[0,1,1,0]]) == 6
+
+    print("All tests passed")
+
+if __name__ == "__main__":
+    test_shortestPathBinaryMatrix()
