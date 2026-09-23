@@ -9,6 +9,22 @@ class Solution:
     )
     
     def shortestPathBinaryMatrix(self, grid: list[list[int]]) -> int:
+        """
+        every step costs the same, so shortest path means fewest levels,
+            BFS level by level, the first time the end cell gets popped is the answer,
+            DFS only finds a path, not the shortest one
+
+        8 directions cuz diagonal counts as adjacent,
+            length starts at 1 cuz the path counts cells not edges, so [[0]] is 1,
+            start or end blocked means -1 right away
+
+        mark visited when pushing not when popping,
+            so the same cell never sits in the queue twice,
+            queue runs dry before reaching the end means no path, return -1
+
+        time: O(n^2), every cell is pushed at most once and checks 8 neighbors
+        space: O(n^2), visited_cell plus the queue
+        """
         n = len(grid)
         
         sr, sc = 0, 0
