@@ -9,6 +9,22 @@ class Solution:
     )
     
     def orangesRotting(self, grid: list[list[int]]) -> int:
+        """
+        only a rotten orange can rot its fresh neighbors, a fresh one can't start by itself,
+            so scan once to count fresh and push every rotten orange into the queue,
+            they all spread at the same time (multi-source BFS), one level is one minute
+
+        flip the fresh orange to 2 and fresh -= 1 right when pushing it,
+            the grid state itself works as visited, no seen set needed,
+            and the same orange can't be counted twice in the same minute
+
+        loop only while there's rotten to spread and fresh left,
+            so no empty minute gets counted after the last one rots,
+            fresh still left after the loop means it can't be reached, return -1
+
+        time: O(m * n), every cell is scanned once and pushed at most once
+        space: O(m * n), the queue in the worst case, grid is modified in place
+        """
         row = len(grid)
         col = len(grid[0])
         
