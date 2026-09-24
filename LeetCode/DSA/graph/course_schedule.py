@@ -1,33 +1,60 @@
-from typing import Dict, List, Set
+from collections import defaultdict
 
 
 class Solution:
-    @staticmethod
-    def is_done_dfs(
-        cus: int, 
-        cus_adj_list: Dict[int, List[int]],
-        cus_done: Set[int] = None,
-    ) -> bool:
-        if cus_done is None:
-            cus_done = set()
+    def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
+        if not prerequisites:
+            return True
         
-        if cus in cus_done: return False
-        elif cus_adj_list[cus] == []: return True
+        prereqs_of = defaultdict(list)
+        for course, prereq in prerequisites:
+            prereqs_of[course].append(prereq)
         
-        cus_done.add(cus)
-        for pre in cus_adj_list[cus]:
-            if not Solution.is_done_dfs(pre, cus_adj_list, cus_done): return False
+        awaiting_courses = set()
         
-        cus_done.remove(cus)
-        cus_adj_list[cus] = []
+        def can_take_course(course: int) -> bool:
+            if course in awaiting_courses:
+                return False
+            
+            elif not prereqs_of[course]:
+                return True
+            
+            awaiting_courses.add(course)
+            for prereq in prereqs_of[course]:
+                if not can_take_course(prereq):
+                    return False
+            
+            awaiting_courses.remove(course)
+            prereqs_of[course] = []
+            
+            return True
         
-        return True
-        
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        pre_of_each_cus = {cus: [] for cus in range(numCourses)}
-        for cus, pre in prerequisites:
-            pre_of_each_cus[cus].append(pre)
-        
-        return all(
-            Solution.is_done_dfs(cus, pre_of_each_cus) for cus in range(numCourses)
-        )
+        return all(can_take_course(course) for course in range(numCourses))
+
+
+canFinish = Solution().canFinish
+
+def test_canFinish():
+    # LeetCode Example 1
+    assert canFinish(2, [[1,0]]) is True
+
+    # LeetCode Example 2
+    assert canFinish(2, [[1,0],[0,1]]) is False
+
+    # Edge cases
+    # self-loop: smallest possible cycle
+    assert canFinish(1, [[0,0]]) is False
+
+    # 3-course cycle: longer than 2
+    assert canFinish(3, [[0,1],[1,2],[2,0]]) is False
+
+    # cycle among courses unreachable from course 0: must check every course
+    assert canFinish(4, [[1,0],[2,3],[3,2]]) is False
+
+    # diamond: shared prereq must not be flagged as a cycle
+    assert canFinish(4, [[1,0],[2,0],[3,1],[3,2]]) is True
+
+    print("All tests passed")
+
+if __name__ == "__main__":
+    test_canFinish()
