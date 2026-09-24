@@ -66,7 +66,7 @@ def test_cloneGraph():
     assert clone.neighbors == []
 
     # LeetCode Example 3: empty graph
-    assert cloneGraph(None) == None
+    assert cloneGraph(None) is None
 
     # Edge cases
 
