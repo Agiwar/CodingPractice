@@ -21,24 +21,24 @@ class Solution:
         time = O(V + E), each node dequeued once, each edge scanned once
         space = O(V), hashmap and queue
         """
-
+        
         if not node:
             return None
         
-        cloned_status = {node.val: Node(node.val)}
-        uncloned_queue = deque([node])
+        cloned_of = {node.val: Node(node.val)}
+        is_not_cloned = deque([node])
         
-        while uncloned_queue:
-            uncloned_node = uncloned_queue.popleft()
+        while is_not_cloned:
+            original = is_not_cloned.popleft()
             
-            for neighbor in uncloned_node.neighbors:
-                if neighbor.val not in cloned_status:
-                    uncloned_queue.append(neighbor)
-                    cloned_status[neighbor.val] = Node(neighbor.val)
+            for neighbor in original.neighbors:
+                if neighbor.val not in cloned_of:
+                    is_not_cloned.append(neighbor)
+                    cloned_of[neighbor.val] = Node(neighbor.val)
                 
-                cloned_status[uncloned_node.val].neighbors.append(cloned_status[neighbor.val])
+                cloned_of[original.val].neighbors.append(cloned_of[neighbor.val])
         
-        return cloned_status[node.val]
+        return cloned_of[node.val]
 
 
 cloneGraph = Solution().cloneGraph
