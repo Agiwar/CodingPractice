@@ -26,14 +26,14 @@ class Solution:
             return None
         
         cloned_of = {node.val: Node(node.val)}
-        is_not_cloned = deque([node])
+        awaiting_neighbors = deque([node])
         
-        while is_not_cloned:
-            original = is_not_cloned.popleft()
+        while awaiting_neighbors:
+            original = awaiting_neighbors.popleft()
             
             for neighbor in original.neighbors:
                 if neighbor.val not in cloned_of:
-                    is_not_cloned.append(neighbor)
+                    awaiting_neighbors.append(neighbor)
                     cloned_of[neighbor.val] = Node(neighbor.val)
                 
                 cloned_of[original.val].neighbors.append(cloned_of[neighbor.val])
