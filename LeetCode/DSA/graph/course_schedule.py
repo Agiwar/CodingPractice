@@ -10,21 +10,21 @@ class Solution:
         for course, prereq in prerequisites:
             prereqs_of[course].append(prereq)
         
-        awaiting_courses = set()
+        in_progress = set()
         
         def can_take_course(course: int) -> bool:
-            if course in awaiting_courses:
+            if course in in_progress:
                 return False
             
             elif not prereqs_of[course]:
                 return True
             
-            awaiting_courses.add(course)
+            in_progress.add(course)
             for prereq in prereqs_of[course]:
                 if not can_take_course(prereq):
                     return False
             
-            awaiting_courses.remove(course)
+            in_progress.remove(course)
             prereqs_of[course] = []
             
             return True
