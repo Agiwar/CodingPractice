@@ -3,6 +3,18 @@ from collections import defaultdict
 
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: list[list[int]]) -> bool:
+        """
+        to take a course, all its prereqs must be takeable too, any one fails then the course fails,
+            so DFS down each course's prereq chain, in_progress holds the courses on the current chain,
+            reaching a course that's still in progress means it loops back to itself, which is a cycle
+
+        once a course passes, empty its prereqs to mark it done,
+            so later checks return True right away, and each course is explored only once
+
+        time = O(V + E), each course and each prereq edge visited once
+        space = O(V + E), adjacency list, plus O(V) for in_progress and recursion depth
+        """
+        
         if not prerequisites:
             return True
         
